@@ -61,15 +61,15 @@ function ArrowScroll() {
       stop()
       heldKey = e.key
 
-      // tap: one smooth jump
-      window.scrollBy({ top: dir * window.innerHeight * 0.85, behavior: 'smooth' })
+      // tap: one smooth half-screen jump
+      window.scrollBy({ top: dir * window.innerHeight * 0.5, behavior: 'smooth' })
 
       // hold: after a short delay, scroll fast until keyup / window blur
       holdTimer = window.setTimeout(() => {
-        const tick = () => window.scrollBy({ top: dir * 85, behavior: 'auto' })
+        const tick = () => window.scrollBy({ top: dir * 130, behavior: 'auto' })
         tick()
         interval = window.setInterval(tick, 16)
-      }, 350)
+      }, 250)
     }
 
     const onKeyUp = (e: KeyboardEvent) => {
