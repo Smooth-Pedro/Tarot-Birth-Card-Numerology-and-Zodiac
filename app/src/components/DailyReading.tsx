@@ -102,7 +102,7 @@ export default function DailyReading() {
                   value={question}
                   maxLength={300}
                   placeholder="e.g. What should I focus on today?"
-                  onChange={(e) => setQuestion(e.target)}
+                  onChange={(e) => setQuestion(e.target.value)}
                   onKeyDown={(e) => {
                     if (e.key === 'Enter' && state.kind !== 'loading') draw()
                   }}
