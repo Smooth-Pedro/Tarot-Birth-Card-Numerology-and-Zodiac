@@ -1,0 +1,288 @@
+[
+ {
+  "num": 0,
+  "name": "The Fool",
+  "keywords": [
+   "Beginnings",
+   "Spontaneity",
+   "Faith",
+   "Leap of faith"
+  ],
+  "meaning": "The Fool marks the start of a journey. You are being called to step into the unknown with an open heart, trusting that the universe will catch you. Innocence, wonder and raw potential define this energy.",
+  "shadow": "Recklessness, naivety, fear of the unknown",
+  "guidance": "Work with the Fool by honouring beginnings: give yourself permission to be a novice and to begin badly. Pair every leap with one small practical anchor — a savings buffer, a return ticket, a deadline — so that faith has something solid to stand on. Ask regularly: is this a true calling or just the thrill of the edge?"
+ },
+ {
+  "num": 1,
+  "name": "The Magician",
+  "keywords": [
+   "Manifestation",
+   "Willpower",
+   "Resourcefulness",
+   "Skill"
+  ],
+  "meaning": "The Magician holds all the tools of the four suits and knows how to use them. This is the card of pure creative will — you already have everything you need to turn ideas into reality.",
+  "shadow": "Manipulation, trickery, untapped potential",
+  "guidance": "Work with the Magician by naming one intention at a time and giving it your full current. Inventory your actual tools — skills, contacts, time — before believing you lack anything. And set yourself an integrity test for every influence you wield: would I still do this if the other person could see my full hand?"
+ },
+ {
+  "num": 2,
+  "name": "The High Priestess",
+  "keywords": [
+   "Intuition",
+   "Sacred knowledge",
+   "Inner voice",
+   "Mystery"
+  ],
+  "meaning": "The High Priestess guards the veil between worlds. She invites you to trust your intuition and the quiet knowing beneath the surface of things. Not everything can be learned from books — some truths are felt.",
+  "shadow": "Secrets, withdrawal, ignoring your inner voice",
+  "guidance": "Work with the High Priestess by treating intuition as data, not noise: write down what you sense before events confirm or deny it, and review the record. Protect a private inner life deliberately — a practice, a journal, a door that closes — and remember that the veil parts for the balanced, not the busy."
+ },
+ {
+  "num": 3,
+  "name": "The Empress",
+  "keywords": [
+   "Abundance",
+   "Nurturing",
+   "Creativity",
+   "Sensuality"
+  ],
+  "meaning": "The Empress is the archetype of creation and care. She rules fertility of all kinds — projects, relationships, ideas — and reminds you that beauty and comfort are forms of wisdom too.",
+  "shadow": "Smothering, dependence, creative blocks",
+  "guidance": "Work with the Empress by creating conditions rather than forcing outcomes: feed the soil, then let the plant do its work. Schedule beauty the way you schedule obligations — it is maintenance, not luxury. And keep one corner of your life that is yours alone to tend, where you receive rather than give."
+ },
+ {
+  "num": 4,
+  "name": "The Emperor",
+  "keywords": [
+   "Authority",
+   "Structure",
+   "Stability",
+   "Fatherhood"
+  ],
+  "meaning": "The Emperor builds kingdoms from stone and law. He represents order, discipline and the protective use of power — the ability to create stability for yourself and for others.",
+  "shadow": "Tyranny, rigidity, control issues",
+  "guidance": "Work with the Emperor by building one structure that serves life rather than cages it — a budget, a routine, a constitution for your household — and reviewing it on schedule. Practise saying “I was wrong” out loud; it is the cheapest proof that your authority is real. And remember: the throne exists to hold the kingdom, not the other way around."
+ },
+ {
+  "num": 5,
+  "name": "The Hierophant",
+  "keywords": [
+   "Tradition",
+   "Spiritual wisdom",
+   "Teaching",
+   "Belief"
+  ],
+  "meaning": "The Hierophant is the bridge between the divine and the everyday. He honours lineage, ritual and shared wisdom — asking you to find the sacred in established paths, or to consciously forge your own.",
+  "shadow": "Dogma, conformity, rebellion against structure",
+  "guidance": "Work with the Hierophant by apprenticing yourself to something older than you — a tradition, a craft, a lineage of thought — long enough to absorb its depth before editing it. Teach what you know; transmission completes the circuit. And when you inherit a rule, ask what problem it was built to solve before you keep or break it."
+ },
+ {
+  "num": 6,
+  "name": "The Lovers",
+  "keywords": [
+   "Love",
+   "Harmony",
+   "Choices",
+   "Alignment"
+  ],
+  "meaning": "The Lovers speak of union — with another, with yourself, with your values. Every deep connection is a mirror, and every choice made from love shapes the architecture of your life.",
+  "shadow": "Imbalance, disharmony, misaligned values",
+  "guidance": "Work with the Lovers by writing your actual values down and testing your big choices against the list, not against the moment’s weather. Treat relationships as curriculum: what is this bond teaching, and am I learning or repeating? And when torn between two paths, ask which one you would defend even if no one ever applauded it."
+ },
+ {
+  "num": 7,
+  "name": "The Chariot",
+  "keywords": [
+   "Determination",
+   "Willpower",
+   "Triumph",
+   "Direction"
+  ],
+  "meaning": "The Chariot is victory through focused will. Two sphinxes pull in opposite directions — only your mastery of opposing forces moves you forward. Discipline turns ambition into arrival.",
+  "shadow": "Aggression, scattered energy, loss of control",
+  "guidance": "Work with the Chariot by choosing fewer battles and winning them completely; define the destination in one sentence before you harness the horses. Notice which sphinx you have been starving — the disciplined one or the instinctive one — and feed it deliberately. And remember: the warrior’s real armour is certainty of purpose, not hardness."
+ },
+ {
+  "num": 8,
+  "name": "Strength",
+  "keywords": [
+   "Courage",
+   "Inner strength",
+   "Patience",
+   "Compassion"
+  ],
+  "meaning": "Strength is the quiet power of the soul. The woman does not kill the lion — she befriends it. This card asks you to meet your wildness with gentleness and your obstacles with steady, patient courage.",
+  "shadow": "Self-doubt, raw emotion, weakness under pressure",
+  "guidance": "Work with Strength by practising the long exhale in the exact moment you want to strike — the pause between impulse and action is where this card lives. Make peace with one appetite consciously (rest, food, anger, comfort) rather than warring with it forever. And measure your power not by what you can break but by what you can hold gently without tiring."
+ },
+ {
+  "num": 9,
+  "name": "The Hermit",
+  "keywords": [
+   "Introspection",
+   "Soul-searching",
+   "Guidance",
+   "Inner light"
+  ],
+  "meaning": "The Hermit walks alone by choice, lantern in hand. He is the seeker who understands that withdrawal is not loneliness but a laboratory — a sacred space where truth can surface.",
+  "shadow": "Isolation, loneliness, refusal of help",
+  "guidance": "Work with the Hermit by scheduling real solitude — hours, not minutes — and protecting it from the world’s static. Carry the lantern for others occasionally: share what your solitude has taught, or it curdles into superiority. And when you notice the difference between “I need to be alone” and “I am afraid to be seen”, honour whichever is true."
+ },
+ {
+  "num": 10,
+  "name": "Wheel of Fortune",
+  "keywords": [
+   "Luck",
+   "Karma",
+   "Cycles",
+   "Turning point"
+  ],
+  "meaning": "The Wheel turns for everyone. This card signals a shift in fate — what was down begins to rise. It teaches you to ride the cycles of life rather than cling to any single moment of them.",
+  "shadow": "Bad luck, resistance to change, stuck cycles",
+  "guidance": "Work with the Wheel by investing in what survives a full rotation — skills, relationships, health — rather than only what pays this quarter. Learn to read your own cycles: when did effort last pay off, and when did patience? And when at the bottom, act like someone who has read the card: prepare, because the turn is coming."
+ },
+ {
+  "num": 11,
+  "name": "Justice",
+  "keywords": [
+   "Truth",
+   "Fairness",
+   "Cause and effect",
+   "Clarity"
+  ],
+  "meaning": "Justice weighs all things with an even hand. She stands for accountability, honest judgement and the law of consequence — you reap precisely what you sow, in this life or the next.",
+  "shadow": "Dishonesty, unfairness, avoidance of accountability",
+  "guidance": "Work with Justice by keeping your own ledger honestly: what you gave, what you took, what you owe. Before judging, gather the missing facts — the scales demand evidence, not vibes. And practise restorative over punitive justice wherever you have the power: the goal is a mended balance, not a broken opponent."
+ },
+ {
+  "num": 12,
+  "name": "The Hanged Man",
+  "keywords": [
+   "Sacrifice",
+   "Letting go",
+   "New perspective",
+   "Surrender"
+  ],
+  "meaning": "The Hanged Man suspends the world as he knows it. By surrendering control and looking at life upside down, he gains the illumination that action alone could never provide.",
+  "shadow": "Stalling, martyrdom, needless sacrifice",
+  "guidance": "Work with the Hanged Man by choosing your suspensions deliberately: when something refuses to move, stop pushing and change your angle instead. Ask “what is this pause teaching?” before asking “how do I end it?”. And retire the word sacrifice whenever martyrdom is what is actually being offered — the card accepts only willing surrender."
+ },
+ {
+  "num": 13,
+  "name": "Death",
+  "keywords": [
+   "Endings",
+   "Transformation",
+   "Transition",
+   "Rebirth"
+  ],
+  "meaning": "Death is the great transformer. Nothing truly ends — everything is compost for what comes next. This card marks a profound metamorphosis: the shedding of an old skin you have outgrown.",
+  "shadow": "Fear of change, stagnation, clinging to the past",
+  "guidance": "Work with Death by holding a personal ritual of endings: finish, bury, and bless what is over before seeding what is next. When the card appears, ask “what is trying to end here?” rather than “what is going wrong?”. And grieve honestly — transformation that skips mourning returns as haunting."
+ },
+ {
+  "num": 14,
+  "name": "Temperance",
+  "keywords": [
+   "Balance",
+   "Moderation",
+   "Patience",
+   "Alchemy"
+  ],
+  "meaning": "Temperance pours water between cups without spilling a drop. She is the art of blending opposites into harmony — the middle path where healing, timing and measured action create lasting results.",
+  "shadow": "Imbalance, excess, lack of long-term vision",
+  "guidance": "Work with Temperance by diluting intensity on purpose: when life runs hot, add routine; when it runs cold, add ritual. Practise one daily moderation deliberately — it trains the pouring hand for the bigger mixes. And in conflict, refuse both war and surrender: keep pouring until a third thing appears."
+ },
+ {
+  "num": 15,
+  "name": "The Devil",
+  "keywords": [
+   "Addiction",
+   "Materialism",
+   "Bondage",
+   "Shadow self"
+  ],
+  "meaning": "The Devil reveals the chains we forge ourselves. What binds you — habit, desire, fear — only has power because you have agreed to wear it. Naming your shadow is the first step to freedom.",
+  "shadow": "Detachment, freedom reclaimed, escapism",
+  "guidance": "Work with the Devil by naming one chain honestly and testing how loose it is: skip it once and watch the panic — that measurement is the reading. Replace suppression with redirection, since the current will not stop flowing. And remember the card’s final secret: the moment the bondage is truly seen, it is already half unbuckled."
+ },
+ {
+  "num": 16,
+  "name": "The Tower",
+  "keywords": [
+   "Sudden change",
+   "Upheaval",
+   "Revelation",
+   "Awakening"
+  ],
+  "meaning": "The Tower is struck by lightning and the false crown falls. Built on shaky foundations, it must crumble so something truer can rise. Sudden, shocking — but ultimately liberating.",
+  "shadow": "Disaster avoided, clinging to false structures",
+  "guidance": "Work with the Tower by auditing your structures before the sky does: which of your towers would you defend with a lie? When the lightning comes, do not rebuild the same floor plan — the blueprint was the problem. And keep this card’s dignity: it never destroys what is true; it only finishes what was false."
+ },
+ {
+  "num": 17,
+  "name": "The Star",
+  "keywords": [
+   "Hope",
+   "Renewal",
+   "Inspiration",
+   "Healing"
+  ],
+  "meaning": "After the storm, the Star. She pours water onto land and stream, promising renewal. This is the card of restored faith — a reminder that you are made of the same light as the stars you wish on.",
+  "shadow": "Hopelessness, self-doubt, lost faith",
+  "guidance": "Work with the Star by healing in both directions like the pouring figure — restore something in yourself and something in the world, every week. Protect your hope as an instrument: calibrated, honest, but never surrendered. And when faith is gone, borrow someone else’s; the stars are communal property."
+ },
+ {
+  "num": 18,
+  "name": "The Moon",
+  "keywords": [
+   "Illusion",
+   "Anxiety",
+   "Subconscious",
+   "Dreams"
+  ],
+  "meaning": "The Moon lights a path that is not what it seems. It rules dreams, instincts and the shadowy territory of the subconscious — asking you to feel your way forward when clarity is impossible.",
+  "shadow": "Confusion, deception, fear dissolving",
+  "guidance": "Work with the Moon by honouring the irrational on schedule: dreams written down, instinct consulted before big moves, fear named precisely so it can be sized. Never sign contracts in the fog — wait for daylight on anything that can be waited on. And keep one practice, art or person through which the subconscious is allowed to speak in its own language."
+ },
+ {
+  "num": 19,
+  "name": "The Sun",
+  "keywords": [
+   "Joy",
+   "Success",
+   "Vitality",
+   "Radiance"
+  ],
+  "meaning": "The Sun is the most welcome card in the deck — pure warmth, vitality and triumph. It speaks of a life lived out loud, of success that is shared, and of the simple radiance of being.",
+  "shadow": "Temporary cloudiness, egotism, delayed joy",
+  "guidance": "Work with the Sun by treating joy as a duty to your chart: celebrate loudly and early, before the cautious part of you files its objections. Share your wins on purpose — this card’s luck multiplies in public. And when clouds cross, remember they are weather, not identity: the sun in this card never actually goes out."
+ },
+ {
+  "num": 20,
+  "name": "Judgement",
+  "keywords": [
+   "Reflection",
+   "Reckoning",
+   "Rebirth",
+   "Inner calling"
+  ],
+  "meaning": "Judgement is the trumpet that wakes the soul. It asks you to review your life honestly, forgive what needs forgiving, and answer the call toward your higher purpose.",
+  "shadow": "Self-criticism, ignoring the call, stagnation",
+  "guidance": "Work with Judgement by holding an honest annual audit of your life: what did I do, what did I avoid, whom do I still need to forgive? Treat the call as data — when something will not stop summoning you, it is usually because it is yours. And deliver your verdicts with mercy: the card’s purpose is resurrection, not punishment."
+ },
+ {
+  "num": 21,
+  "name": "The World",
+  "keywords": [
+   "Completion",
+   "Accomplishment",
+   "Wholeness",
+   "Journey"
+  ],
+  "meaning": "The World is the final card — the dance of completion. A cycle has closed successfully, and you stand whole, integrated, ready for the next turn of the spiral. Celebration is earned.",
+  "shadow": "Incompletion, shortcuts, loose ends",
+  "guidance": "Work with the World by honouring completions ritually: finished things must be marked, or the psyche learns that endings do not count. Resist the shortcut on the final stretch; this card is precisely about the last mile. And when a cycle closes, celebrate before beginning again — the dance at the centre of the wreath is the point of the entire journey."
+ }
+]
