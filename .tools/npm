@@ -1,0 +1,2 @@
+#!/usr/bin/env bash
+exec cmd //c "C:\Users\pudlo\AppData\Local\Programs\Kimi\resources\resources\runtime\npm.cmd" "$@"
