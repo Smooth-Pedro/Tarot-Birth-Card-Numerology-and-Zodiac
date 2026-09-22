@@ -50,7 +50,7 @@ O protótipo "Ask the Arcana" já está pronto no site. Falta só a chave da IA,
 ### 🔴 ALTA — faça antes de lançar
 
 **1. Proteger a chave da IA (já está assim, mantenha assim)**
-- A chave fica só na Netlify (environment variable). **Nunca** cole a chave em nenhum arquivo do projeto
+- A chave fica só na hospedagem (Netlify ou Cloudflare, em "environment variables"). **Nunca** cole a chave em nenhum arquivo do projeto
 - Se a chave vazar (ex.: alguém publica no GitHub), apague e crie outra na hora
 
 **2. Limite de gastos no Google (tampa do botijão)**
