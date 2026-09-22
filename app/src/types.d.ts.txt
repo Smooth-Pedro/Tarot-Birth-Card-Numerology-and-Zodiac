@@ -1,0 +1,28 @@
+// app/src/types.d.ts
+
+export interface TarotCard {
+  id: number;
+  name: string;
+  keywords: string[];
+  meanings: {
+    upright: string;
+    reversed?: string; // Opcional, caso não use invertidas
+  };
+  shadow: string;
+}
+
+export interface NumerologyProfile {
+  number: number;
+  isMasterNumber: boolean;
+  description: string;
+  traits: string[];
+}
+
+export interface JourneyMeeting {
+  id: number;
+  title: string;
+  role: string;
+  place: string;
+  text: string;
+  image: string; // Ex: 'the-fool-meets-01.jpg'
+}
