@@ -1,5 +1,0 @@
-# AI reading API → serverless function (proxy; the browser still sees /api/daily-reading)
-/api/daily-reading    /.netlify/functions/daily-reading    200
-
-# SPA fallback: every path serves the app
-/*    /index.html   200
