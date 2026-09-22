@@ -13,7 +13,14 @@ Como ler este guia:
 
 O protótipo "Ask the Arcana" já está pronto no site. Falta só a chave da IA, que fica **do lado do servidor (hospedagem)** — nunca no código do site, para ninguém roubar e gastar em seu nome.
 
-**Qual hospedagem usar?** **Cloudflare Pages conectado ao GitHub** — grátis de verdade: banda ilimitada, funções de IA incluídas, variável da chave grátis, e publicação automática toda vez que você atualizar o repositório. Atenção: o envio arrastando a pasta direto no painel da Cloudflare **não funciona** (dá o aviso "Pages functions are not supported") — tem que ser via GitHub, como abaixo. Também deixei pronta uma versão Netlify, mas partes da interface de variáveis de ambiente deles estão bloqueadas no plano pago, então a Cloudflare é o caminho sem pegadinha.
+**Qual hospedagem usar?** **Cloudflare Pages conectado ao GitHub** — grátis de verdade: banda ilimitada, funções de IA incluídas, variável da chave grátis, e publicação automática toda vez que você atualizar o repositório. Atenção: o envio arrastando a pasta direto no painel da Cloudflare **não funciona** (dá o aviso "Pages functions are not supported") — tem que ser via GitHub, como abaixo. Também existe a opção Netlify (arrastar a pasta), mas partes da interface de variáveis de ambiente deles estão bloqueadas no plano pago — se um dia usar a Netlify, crie um arquivo chamado `_redirects` na raiz do deploy com estas duas linhas:
+
+```
+/api/daily-reading    /.netlify/functions/daily-reading    200
+/*    /index.html   200
+```
+
+(O arquivo `_redirects` é da Netlify — **não** deixe ele no repositório da Cloudflare, porque a Cloudflare tenta ler e dá erro de "infinite loop".)
 
 ### Passo 1 — Criar a chave gratuita do Gemini
 1. Abra **aistudio.google.com** (Google AI Studio)
