@@ -23,8 +23,8 @@ function ScrollManager() {
 
 /**
  * Arrow keys scroll the page (skipped while typing in inputs).
- * Single press = one screen, smooth. Holding = continuous fast scroll
- * driven by a timer (~85 px per frame, independent of the OS key-repeat
+ * Single press = half a screen, smooth. Holding = continuous fast scroll
+ * driven by a timer (~130 px per frame, independent of the OS key-repeat
  * rate, which is what made holding feel so slow before).
  */
 function ArrowScroll() {
