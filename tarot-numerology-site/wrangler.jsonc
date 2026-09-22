@@ -1,0 +1,13 @@
+// Tells Cloudflare how to deploy this project (Git-connected Worker):
+// - serve the repo root as static site files (your built site)
+// - route /api/daily-reading through worker.js (the AI reading function)
+// - SPA fallback: unknown paths serve index.html (client-side routing)
+{
+  "name": "tarot-and-numerology-site",
+  "main": "worker.js",
+  "compatibility_date": "2026-01-01",
+  "assets": {
+    "directory": "./",
+    "not_found_handling": "single-page-application"
+  }
+}
