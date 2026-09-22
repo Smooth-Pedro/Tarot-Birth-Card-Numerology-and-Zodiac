@@ -249,6 +249,9 @@ export default function Home() {
         </main>
       )}
 
+      {/* ── AI daily reading ─────────────────────────────── */}
+      <DailyReading />
+
       {/* ── How it works ─────────────────────────────────── */}
       <section className="max-w-3xl mx-auto px-6 pb-20">
         <h2 className="font-cinzel text-2xl text-amber-100 text-center mb-6">
