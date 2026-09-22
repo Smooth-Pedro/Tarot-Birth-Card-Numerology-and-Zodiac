@@ -24,8 +24,9 @@ function ScrollManager() {
 /**
  * Arrow keys scroll the page (skipped while typing in inputs).
  * Single press = half a screen, smooth. Holding = continuous fast scroll
- * driven by a timer (~130 px per frame, independent of the OS key-repeat
- * rate, which is what made holding feel so slow before).
+ * driven by a timer. Ticks use behavior 'instant' to override the global
+ * scroll-behavior: smooth CSS — otherwise each 16 ms tick restarts a smooth
+ * animation and holding feels stuck in slow motion.
  */
 function ArrowScroll() {
   useEffect(() => {
@@ -66,7 +67,7 @@ function ArrowScroll() {
 
       // hold: after a short delay, scroll fast until keyup / window blur
       holdTimer = window.setTimeout(() => {
-        const tick = () => window.scrollBy({ top: dir * 130, behavior: 'auto' })
+        const tick = () => window.scrollBy({ top: dir * 60, behavior: 'instant' as ScrollBehavior })
         tick()
         interval = window.setInterval(tick, 16)
       }, 250)

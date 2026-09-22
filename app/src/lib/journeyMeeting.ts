@@ -117,8 +117,8 @@ export const JOURNEY_MEETINGS: Record<number, JourneyMeeting> = {
     num: 10,
     role: 'Trial',
     title: 'The Fool Meets the Wheel of Fortune',
-    place: 'The open sky, where a great golden wheel turns forever',
-    text: 'Without warning the ground simply vanishes, and the Fool is lifted into the air by a wheel too large to see the rim of. On it ride a sphinx, a wolf-serpent that rises and falls, and zodiac sigils that blaze as they pass. Fixed in the corner of the sky, a winged figure watches, holding the wheel’s still center. The Wheel is the trial no will can steer: fortunes rise, fortunes fall, and the only choice left is where to stand on the rim — clinging to the outside, spinning helpless, or moving toward the center where nothing turns. The Fool is set back on the road breathless, with the first taste of fate in his mouth: not everything that happens is his to command.',
+    place: 'A starlit peak, a vision of infinity, a golden wheel turning in the sky',
+    text: 'Alone on his starlit peak, the Hermit lifts his lantern one last time — and the night opens. He sees it all at once: the road behind him and the road ahead, the maiden, the lion, the dog he lost and found again, every meeting woven into one endless pattern that turns back on itself like a figure of eight laid on its side. Infinity — and how all things connect. Then the pattern gathers into a great golden wheel turning slowly in the sky, winged creatures reading upon its clouds. From the wheel’s still center comes an offer no lantern could have found: to step back onto the rim, to be made a young lad once more, and to walk the turning world again. The old man smiles. The wheel turns — and the Fool is ready.',
     image: img(10),
   },
   11: {
