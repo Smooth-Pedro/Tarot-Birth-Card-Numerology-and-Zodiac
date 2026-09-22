@@ -41,7 +41,7 @@ export default function DailyReading() {
   const draw = async () => {
     setState({ kind: 'loading' })
     try {
-      const res = await fetch('/.netlify/functions/daily-reading', {
+      const res = await fetch('/api/daily-reading', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ question: question.trim() }),
