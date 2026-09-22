@@ -11,7 +11,9 @@ Como ler este guia:
 
 ## PARTE 1 — Como ligar a leitura de IA (3 passos)
 
-O protótipo "Ask the Arcana" já está pronto no site. Falta só a chave da IA, que fica **do lado do servidor (Netlify)** — nunca no código do site, para ninguém roubar e gastar em seu nome.
+O protótipo "Ask the Arcana" já está pronto no site. Falta só a chave da IA, que fica **do lado do servidor (hospedagem)** — nunca no código do site, para ninguém roubar e gastar em seu nome.
+
+**Qual hospedagem usar?** Recomendo **Cloudflare Pages** (grátis): banda ilimitada, sem limite de visitantes, proteção contra ataques incluída, e se um dia precisar do plano pago é só US$ 5/mês. A Netlify também funciona (plano grátis com 100 GB/mês). O código do site já serve nas duas — siga o passo 2 de uma delas só.
 
 ### Passo 1 — Criar a chave gratuita do Gemini
 1. Abra **aistudio.google.com** (Google AI Studio)
@@ -21,14 +23,21 @@ O protótipo "Ask the Arcana" já está pronto no site. Falta só a chave da IA,
 
 > É de graça: o nível gratuito tem limite diário de pedidos, suficiente para testar e para os primeiros usuários.
 
-### Passo 2 — Colocar a chave na Netlify
+### Passo 2A — Opção Cloudflare (recomendada)
+1. Crie uma conta em **cloudflare.com** (grátis)
+2. No menu lateral, vá em **Workers & Pages** → **Create** → **Pages** → **Upload assets**
+3. Dê um nome ao projeto e faça o upload da pasta `tarot-numerology-site/` (ou conecte um repositório GitHub para publicação automática)
+4. Depois do primeiro deploy, vá em **Settings → Environment variables** e adicione `GEMINI_API_KEY` com a chave do passo 1
+5. Faça um novo deploy para a variável valer
+
+### Passo 2B — Opção Netlify
 1. Na Netlify, abra seu site → **Site settings** → **Environment variables**
 2. Clique em **Add a variable**
 3. Nome: `GEMINI_API_KEY` · Valor: cole a chave do passo 1
 4. Salve
 
 ### Passo 3 — Publicar de novo
-1. Arraste a pasta `tarot-numerology-site/` para a Netlify de novo (deploy novo)
+1. Envie a pasta `tarot-numerology-site/` para a hospedagem de novo (deploy novo)
 2. Pronto — abra o site, role até **"Ask the Arcana"**, escreva uma pergunta (ou deixe em branco) e clique em **"Draw the Card of the Day"**
 3. A carta do dia é a mesma para todo mundo até meia-noite — se atualizar a página, a leitura continua lá (fica salva no navegador)
 
