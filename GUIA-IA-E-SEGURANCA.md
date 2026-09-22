@@ -13,7 +13,7 @@ Como ler este guia:
 
 O protótipo "Ask the Arcana" já está pronto no site. Falta só a chave da IA, que fica **do lado do servidor (hospedagem)** — nunca no código do site, para ninguém roubar e gastar em seu nome.
 
-**Qual hospedagem usar?** Recomendo **Cloudflare Pages** (grátis): banda ilimitada, sem limite de visitantes, proteção contra ataques incluída, e se um dia precisar do plano pago é só US$ 5/mês. A Netlify também funciona (plano grátis com 100 GB/mês). O código do site já serve nas duas — siga o passo 2 de uma delas só.
+**Qual hospedagem usar?** **Cloudflare Pages conectado ao GitHub** — grátis de verdade: banda ilimitada, funções de IA incluídas, variável da chave grátis, e publicação automática toda vez que você atualizar o repositório. Atenção: o envio arrastando a pasta direto no painel da Cloudflare **não funciona** (dá o aviso "Pages functions are not supported") — tem que ser via GitHub, como abaixo. Também deixei pronta uma versão Netlify, mas partes da interface de variáveis de ambiente deles estão bloqueadas no plano pago, então a Cloudflare é o caminho sem pegadinha.
 
 ### Passo 1 — Criar a chave gratuita do Gemini
 1. Abra **aistudio.google.com** (Google AI Studio)
@@ -23,23 +23,28 @@ O protótipo "Ask the Arcana" já está pronto no site. Falta só a chave da IA,
 
 > É de graça: o nível gratuito tem limite diário de pedidos, suficiente para testar e para os primeiros usuários.
 
-### Passo 2A — Opção Cloudflare (recomendada)
-1. Crie uma conta em **cloudflare.com** (grátis)
-2. No menu lateral, vá em **Workers & Pages** → **Create** → **Pages** → **Upload assets**
-3. Dê um nome ao projeto e faça o upload da pasta `tarot-numerology-site/` (ou conecte um repositório GitHub para publicação automática)
-4. Depois do primeiro deploy, vá em **Settings → Environment variables** e adicione `GEMINI_API_KEY` com a chave do passo 1
-5. Faça um novo deploy para a variável valer
+### Passo 2 — Subir o site para o GitHub (5 minutos, sem instalar nada)
+1. Abra **github.com** → faça login → botão **New** (novo repositório)
+2. Nome: ex. `tarot-site` → deixe **Public** ou **Private** (os dois funcionam) → **Create repository**
+3. Na página do repositório, clique em **Add file → Upload files**
+4. Abra a pasta `tarot-numerology-site` no seu computador, **selecione TUDO dentro dela** (Ctrl+A) e arraste para a página do GitHub — ele sobe os arquivos e pastas mantendo a estrutura
+5. Clique em **Commit changes**
 
-### Passo 2B — Opção Netlify
-1. Na Netlify, abra seu site → **Site settings** → **Environment variables**
-2. Clique em **Add a variable**
-3. Nome: `GEMINI_API_KEY` · Valor: cole a chave do passo 1
-4. Salve
+### Passo 3 — Conectar o Cloudflare ao GitHub
+1. Em **cloudflare.com** → menu lateral **Workers & Pages** → **Create** → aba **Pages** → **Connect to Git**
+2. Autorize o Cloudflare a acessar sua conta do GitHub (aparece uma tela de permissão) e escolha o repositório `tarot-site`
+3. Configure assim:
+   - **Framework preset:** None
+   - **Build command:** deixe vazio
+   - **Build output directory:** `/`
+4. Em **Environment variables**, adicione: nome `GEMINI_API_KEY`, valor = a chave do passo 1
+5. Clique em **Save and Deploy**
+6. Em ~1 minuto o site está no ar, com a IA funcionando — e toda vez que você atualizar o GitHub, o site se republica sozinho
 
-### Passo 3 — Publicar de novo
-1. Envie a pasta `tarot-numerology-site/` para a hospedagem de novo (deploy novo)
-2. Pronto — abra o site, role até **"Ask the Arcana"**, escreva uma pergunta (ou deixe em branco) e clique em **"Draw the Card of the Day"**
-3. A carta do dia é a mesma para todo mundo até meia-noite — se atualizar a página, a leitura continua lá (fica salva no navegador)
+### Passo 4 — Testar
+Abra o site, role até **"Ask the Arcana"**, escreva uma pergunta (ou deixe em branco) e clique em **"Draw the Card of the Day"**. A carta do dia é a mesma para todo mundo até meia-noite, e a leitura fica salva no navegador se você atualizar a página.
+
+**Para atualizar o site no futuro:** refaça o build (duplo clique em `REBUILD.bat`), selecione tudo dentro da pasta `tarot-numerology-site`, suba de novo em **Add file → Upload files** no GitHub, e o Cloudflare republica sozinho.
 
 **Se der errado:** a mensagem "The oracle is not connected yet" significa que a chave não foi encontrada — confira o nome da variável (`GEMINI_API_KEY`, tudo maiúsculo) e se o deploy foi feito depois de salvar a variável.
 
