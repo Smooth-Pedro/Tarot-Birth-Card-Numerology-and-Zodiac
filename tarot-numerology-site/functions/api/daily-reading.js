@@ -1,20 +1,12 @@
-// ─── Daily AI Tarot Reading — Netlify Function (ESM, zero dependencies) ───
+// ─── Daily AI Tarot Reading — Cloudflare Pages Function ───
+// Same logic as netlify/functions/daily-reading.mjs, adapted to the
+// Cloudflare Workers runtime (env vars arrive via `context.env`).
 //
-// Draws one Major Arcana for the day (seeded by the date, so the card is the
-// same for everyone until midnight) and asks Gemini to interpret it in the
-// voice of the site, using the card meanings from /api/card-data.json
-// (extracted from the site's own tarot.ts).
-//
-// Required env var:  GEMINI_API_KEY   (Google AI Studio key — never exposed to the browser)
-// Optional env var:  GEMINI_MODEL     (defaults to the current Flash generation)
-//
-// Prototype notes:
-//  - No user accounts yet, so quota is enforced with a light in-memory
-//    per-IP rate limit only. Real per-user daily quotas come with Supabase auth.
+// Required env var: GEMINI_API_KEY — set via:
+//   Dashboard → Pages → your project → Settings → Environment variables, or
+//   npx wrangler pages secret put GEMINI_API_KEY --project-name=<project>
 
-const MODELS = process.env.GEMINI_MODEL
-  ? [process.env.GEMINI_MODEL]
-  : ['gemini-3.8-flash', 'gemini-3.7-flash', 'gemini-3.5-flash']
+const MODELS = ['gemini-3.8-flash', 'gemini-3.7-flash', 'gemini-3.5-flash']
 
 const MAX_QUESTION = 300
 
@@ -28,13 +20,11 @@ Voice rules:
 - Reflection and entertainment only: if the question touches health, law or money, answer reflectively and gently decline to give professional advice.
 - 3 short paragraphs, plain text, no headings, no bullet points, no disclaimers.`
 
-/** Same card for everyone, all day: seed = UTC date. */
 function drawCardOfTheDay(cards) {
   const seed = Number(new Date().toISOString().slice(0, 10).replace(/-/g, ''))
   return cards[seed % cards.length]
 }
 
-// ── Light per-IP rate limit (10/min) — placeholder until real accounts exist ──
 const hits = new Map()
 function rateLimited(ip) {
   const now = Date.now()
@@ -46,31 +36,27 @@ function rateLimited(ip) {
 }
 
 function json(body, status = 200) {
-  return new Response(JSON.stringify(body), {
-    status,
-    headers: { 'Content-Type': 'application/json' },
-  })
+  return Response.json(body, { status })
 }
 
-export default async (req) => {
-  if (req.method !== 'POST') return json({ error: 'POST only' }, 405)
+export async function onRequestPost(context) {
+  const { request, env } = context
 
-  // No key configured → tell the UI to show the "not connected yet" state.
-  const apiKey = process.env.GEMINI_API_KEY
+  const apiKey = env.GEMINI_API_KEY
   if (!apiKey) return json({ configured: false })
 
-  const ip = req.headers.get('x-nf-client-connection-ip') ?? 'unknown'
+  const ip = request.headers.get('cf-connecting-ip') ?? 'unknown'
   if (rateLimited(ip)) return json({ error: 'Slow down — the cards need a moment.' }, 429)
 
   let question = ''
   try {
-    const body = await req.json()
+    const body = await request.json()
     question = String(body?.question ?? '').trim().slice(0, MAX_QUESTION)
   } catch {
     /* empty body is fine — a question is optional */
   }
 
-  const origin = process.env.URL ?? new URL(req.url).origin
+  const origin = new URL(request.url).origin
   const cardsRes = await fetch(`${origin}/api/card-data.json`)
   if (!cardsRes.ok) return json({ error: 'Card deck not found.' }, 502)
   const CARDS = await cardsRes.json()
@@ -97,7 +83,7 @@ ${question ? `The reader's question: "${question}"` : 'The reader asked no quest
         }),
       },
     )
-    if (res.status === 404 || res.status === 403) continue // model not available — try next
+    if (res.status === 404 || res.status === 403) continue
     if (!res.ok) return json({ error: 'The oracle stumbled — try again in a moment.' }, 502)
     const data = await res.json()
     const reading = data?.candidates?.[0]?.content?.parts?.map((p) => p.text).join('').trim()
@@ -105,4 +91,8 @@ ${question ? `The reader's question: "${question}"` : 'The reader asked no quest
     return json({ configured: true, num: card.num, name: card.name, keywords: card.keywords, reading })
   }
   return json({ error: 'No Gemini model available — check GEMINI_MODEL.' }, 502)
+}
+
+export async function onRequest() {
+  return json({ error: 'POST only' }, 405)
 }
