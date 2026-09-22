@@ -1,0 +1,137 @@
+2026-09-22T15:58:32.489Z	Initializing build environment...
+2026-09-22T15:58:43.831Z	Success: Finished initializing build environment
+2026-09-22T15:58:44.477Z	Cloning repository...
+2026-09-22T15:58:49.442Z	No build output detected to cache. Skipping.
+2026-09-22T15:58:49.442Z	No dependencies detected to cache. Skipping.
+2026-09-22T15:58:49.445Z	Detected the following tools from environment: 
+2026-09-22T15:58:49.673Z	Executing user deploy command: npx wrangler deploy
+2026-09-22T15:58:53.005Z	npm warn exec The following package was not found and will be installed: wrangler@4.136.2
+2026-09-22T15:59:04.942Z	
+2026-09-22T15:59:04.942Z	 ⛅️ wrangler 4.136.2
+2026-09-22T15:59:04.943Z	────────────────────
+2026-09-22T15:59:05.075Z	
+2026-09-22T15:59:05.076Z	Detected Project Settings:
+2026-09-22T15:59:05.076Z	 - Worker Name: tarot-and-numerology-site
+2026-09-22T15:59:05.076Z	 - Framework: Static
+2026-09-22T15:59:05.076Z	 - Output Directory: tarot-numerology-site
+2026-09-22T15:59:05.076Z	
+2026-09-22T15:59:05.076Z	? Do you want to modify these settings?
+2026-09-22T15:59:05.076Z	🤖 Using fallback value in non-interactive context: no
+2026-09-22T15:59:05.079Z	
+2026-09-22T15:59:05.084Z	📄 Create wrangler.jsonc:
+2026-09-22T15:59:05.084Z	  {
+2026-09-22T15:59:05.084Z	    "$schema": "node_modules/wrangler/config-schema.json",
+2026-09-22T15:59:05.085Z	    "name": "tarot-and-numerology-site",
+2026-09-22T15:59:05.085Z	    "compatibility_date": "2026-09-21",
+2026-09-22T15:59:05.085Z	    "observability": {
+2026-09-22T15:59:05.085Z	      "enabled": true
+2026-09-22T15:59:05.086Z	    },
+2026-09-22T15:59:05.088Z	    "assets": {
+2026-09-22T15:59:05.089Z	      "directory": "tarot-numerology-site"
+2026-09-22T15:59:05.089Z	    }
+2026-09-22T15:59:05.089Z	  }
+2026-09-22T15:59:05.089Z	
+2026-09-22T15:59:05.090Z	? Proceed with setup?
+2026-09-22T15:59:05.090Z	🤖 Using fallback value in non-interactive context: yes
+2026-09-22T15:59:05.095Z	├ Adding Wrangler files to the .gitignore file
+2026-09-22T15:59:05.096Z	│ created .gitignore file
+2026-09-22T15:59:05.096Z	│
+2026-09-22T15:59:06.046Z	▲ [WARNING] The local configuration being used (generated from your local configuration file) differs from the remote configuration of your Worker set via the Cloudflare Dashboard:
+2026-09-22T15:59:06.046Z	
+2026-09-22T15:59:06.046Z	   {
+2026-09-22T15:59:06.046Z	  +  assets: {
+2026-09-22T15:59:06.046Z	  +  }
+2026-09-22T15:59:06.046Z	  -  compatibility_date: "2026-09-22"
+2026-09-22T15:59:06.046Z	  +  compatibility_date: "2026-09-21"
+2026-09-22T15:59:06.046Z	     observability: {
+2026-09-22T15:59:06.046Z	  -    enabled: false
+2026-09-22T15:59:06.046Z	  +    enabled: true
+2026-09-22T15:59:06.046Z	       logs: {
+2026-09-22T15:59:06.047Z	  -      enabled: false
+2026-09-22T15:59:06.047Z	  +      enabled: true
+2026-09-22T15:59:06.047Z	       }
+2026-09-22T15:59:06.047Z	     }
+2026-09-22T15:59:06.048Z	   }
+2026-09-22T15:59:06.049Z	  
+2026-09-22T15:59:06.049Z	  
+2026-09-22T15:59:06.049Z	  Uploading the Worker will override the remote configuration with your local one.
+2026-09-22T15:59:06.050Z	
+2026-09-22T15:59:06.050Z	
+2026-09-22T15:59:06.158Z	🌀 Building list of assets...
+2026-09-22T15:59:06.160Z	✨ Read 62 files from the assets directory /opt/buildhome/repo/tarot-numerology-site
+2026-09-22T15:59:06.623Z	🌀 Starting asset upload...
+2026-09-22T15:59:08.324Z	🌀 Found 54 new or modified static assets to upload. Proceeding with upload...
+2026-09-22T15:59:08.325Z	+ /wrangler.jsonc
+2026-09-22T15:59:08.325Z	+ /functions/api/daily-reading.js
+2026-09-22T15:59:08.325Z	+ /assets/index-ClYKlK8N.css
+2026-09-22T15:59:08.327Z	+ /assets/08_A_Forca_EN-BPvAqOkc.jpg
+2026-09-22T15:59:08.329Z	+ /assets/13_Death_EN-CzQs2lhw.jpg
+2026-09-22T15:59:08.331Z	+ /assets/16_The_Tower_EN-BEdIspzT.jpg
+2026-09-22T15:59:08.331Z	+ /assets/21_The_World_EN-BR6mMzAm.jpg
+2026-09-22T15:59:08.332Z	+ /assets/05_O_Hierofante_EN-NqEuvszR.jpg
+2026-09-22T15:59:08.332Z	+ /assets/03_A_Imperatriz_EN-DVa-tMdn.jpg
+2026-09-22T15:59:08.332Z	+ /journey/the-fool-meets-15.jpg
+2026-09-22T15:59:08.334Z	+ /journey/the-fool-meets-12.jpg
+2026-09-22T15:59:08.334Z	+ /journey/the-fool-meets-10.jpg
+2026-09-22T15:59:08.334Z	+ /journey/the-fool-meets-03.jpg
+2026-09-22T15:59:08.335Z	+ /assets/15_The_Devil_EN-9hffgPpC.jpg
+2026-09-22T15:59:08.336Z	+ /journey/the-fool-meets-14.jpg
+2026-09-22T15:59:08.336Z	+ /assets/02_A_Sacerdotisa_EN-TufnQTnW.jpg
+2026-09-22T15:59:08.336Z	+ /journey/the-fool-meets-20.jpg
+2026-09-22T15:59:08.336Z	+ /journey/the-fool-meets-14-new.png
+2026-09-22T15:59:08.336Z	+ /worker.js
+2026-09-22T15:59:08.337Z	+ /netlify/functions/daily-reading.mjs
+2026-09-22T15:59:08.337Z	+ /assets/09_O_Eremita_EN-DxWVmOS2.jpg
+2026-09-22T15:59:08.337Z	+ /assets/01_O_Mago_EN-BISg8BQg.jpg
+2026-09-22T15:59:08.337Z	+ /assets/18_The_Moon_EN-CUnVoxE4.jpg
+2026-09-22T15:59:08.337Z	+ /assets/11_Justice_EN-DWPD3AJa.jpg
+2026-09-22T15:59:08.338Z	+ /assets/14_Temperance_EN-NDdJhv_T.jpg
+2026-09-22T15:59:08.338Z	+ /assets/20_Judgement_EN-CwhjklXS.jpg
+2026-09-22T15:59:08.338Z	+ /journey/the-fool-meets-08.jpg
+2026-09-22T15:59:08.338Z	+ /journey/the-fool-meets-11.jpg
+2026-09-22T15:59:08.338Z	+ /journey/the-fool-meets-04.jpg
+2026-09-22T15:59:08.339Z	+ /journey/the-fool-meets-06.jpg
+2026-09-22T15:59:08.340Z	+ /assets/00_O_Louco_EN-B_ZW4WS3.jpg
+2026-09-22T15:59:08.340Z	+ /journey/the-fool-meets-07.jpg
+2026-09-22T15:59:08.340Z	+ /assets/10_Wheel_of_Fortune_EN-CwbPyNCm.jpg
+2026-09-22T15:59:08.340Z	+ /journey/the-fool-meets-18.jpg
+2026-09-22T15:59:08.340Z	+ /journey/the-fool-meets-17.jpg
+2026-09-22T15:59:08.340Z	+ /journey/the-fool-meets-06-new.png
+2026-09-22T15:59:08.340Z	+ /index.html
+2026-09-22T15:59:08.340Z	+ /api/card-data.json
+2026-09-22T15:59:08.340Z	+ /assets/17_The_Star_EN-BLb6ZSQo.jpg
+2026-09-22T15:59:08.341Z	+ /assets/12_The_Hanged_Man_EN-DB4iqVS3.jpg
+2026-09-22T15:59:08.341Z	+ /assets/04_O_Imperador_EN-CZuST0CO.jpg
+2026-09-22T15:59:08.341Z	+ /assets/06_Os_Enamorados_EN-CWDhxioG.jpg
+2026-09-22T15:59:08.342Z	+ /assets/07_O_Carro_EN-zzGJzemW.jpg
+2026-09-22T15:59:08.344Z	+ /assets/19_The_Sun_EN-DWKGQJEK.jpg
+2026-09-22T15:59:08.344Z	+ /journey/the-fool-meets-01.jpg
+2026-09-22T15:59:08.344Z	+ /journey/the-fool-meets-05.jpg
+2026-09-22T15:59:08.344Z	+ /assets/index-BHUhiooC.js
+2026-09-22T15:59:08.345Z	+ /journey/the-fool-meets-02.jpg
+2026-09-22T15:59:08.345Z	+ /journey/the-fool-meets-16.jpg
+2026-09-22T15:59:08.345Z	+ /assets/celestial-bg-DzI1EEF6.jpg
+2026-09-22T15:59:08.345Z	+ /journey/the-fool-meets-09.jpg
+2026-09-22T15:59:08.345Z	+ /journey/the-fool-meets-13.jpg
+2026-09-22T15:59:08.345Z	+ /journey/the-fool-meets-19.jpg
+2026-09-22T15:59:08.345Z	+ /journey/the-fool-meets-13-new.png
+2026-09-22T15:59:13.951Z	Uploaded 18 of 54 assets
+2026-09-22T15:59:16.711Z	Uploaded 36 of 54 assets
+2026-09-22T15:59:17.103Z	Uploaded 54 of 54 assets
+2026-09-22T15:59:17.104Z	✨ Success! Uploaded 54 files (8.77 sec)
+2026-09-22T15:59:17.104Z	
+2026-09-22T15:59:17.108Z	Total Upload: 0.33 KiB / gzip: 0.24 KiB
+2026-09-22T15:59:17.375Z	
+2026-09-22T15:59:17.375Z	Cloudflare collects anonymous telemetry about your usage of Wrangler. Learn more at https://github.com/cloudflare/workers-sdk/tree/main/packages/wrangler/telemetry.md
+2026-09-22T15:59:17.377Z	
+2026-09-22T15:59:17.380Z	✘ [ERROR] A request to the Cloudflare API (/accounts/7fc15c7b2533c3f7909e2fd3eac8f3d5/workers/scripts/tarot-and-numerology-site/versions) failed.
+2026-09-22T15:59:17.380Z	
+2026-09-22T15:59:17.380Z	  Invalid _redirects configuration:
+2026-09-22T15:59:17.380Z	  Line 5: Infinite loop detected in this rule. This would cause a redirect to strip `.html` or `/index` and end up triggering this rule again. [code: 100324]
+2026-09-22T15:59:17.380Z	
+2026-09-22T15:59:17.380Z	  
+2026-09-22T15:59:17.380Z	  If you think this is a bug, please open an issue at: https://github.com/cloudflare/workers-sdk/issues/new/choose
+2026-09-22T15:59:17.380Z	
+2026-09-22T15:59:17.380Z	
+2026-09-22T15:59:17.394Z	🪵  Logs were written to "/opt/buildhome/.config/.wrangler/logs/wrangler-2026-09-22_15-59-04_360.log"
+2026-09-22T15:59:17.526Z	Failed: error occurred while running deploy command
