@@ -201,25 +201,21 @@ export default function NatalChartPanel({ chart }: { chart: NatalChart }) {
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 mt-6">
           {chart.wheel
             ? chart.wheel.map((h) => (
-                <div key={h.house}>
-                  <WheelCell
-                    heading={`House ${h.house} · ${getHouse(h.house).theme.split(',')[0]}`}
-                    sign={h.sign}
-                    bodies={h.bodies}
-                  />
-                </div>
+                <WheelCell
+                  key={h.house}
+                  heading={`House ${h.house} · ${getHouse(h.house).theme.split(',')[0]}`}
+                  sign={h.sign}
+                  bodies={h.bodies}
+                />
               ))
-            : (() => {
-                const bySign = new Map<string, ChartBody[]>()
-                for (const b of chart.bodies) {
-                  const list = bySign.get(b.sign.key) ?? []
-                  list.push(b)
-                  bySign.set(b.sign.key, list)
-                }
-                const signs = chart.bodies[0] ? undefined : undefined
-                void signs
-                return null
-              })()}
+            : SIGNS.map((s) => (
+                <WheelCell
+                  key={s.key}
+                  heading={`${s.dates}`}
+                  sign={s}
+                  bodies={chart.bodies.filter((b) => b.sign.key === s.key)}
+                />
+              ))}
         </div>
       </div>
     </section>
