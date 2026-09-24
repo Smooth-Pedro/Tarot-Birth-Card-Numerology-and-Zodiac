@@ -13,6 +13,12 @@ export default defineConfig({
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),
+      // the published package.json points "module" at a file npm doesn't ship —
+      // resolve straight to the bundled dist build instead
+      "circular-natal-horoscope-js": path.resolve(
+        __dirname,
+        "./node_modules/circular-natal-horoscope-js/dist/index.js",
+      ),
     },
   },
 });
