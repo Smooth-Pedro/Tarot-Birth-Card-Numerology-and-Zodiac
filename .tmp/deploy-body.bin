@@ -1,0 +1,141 @@
+--PagesDeployBoundaryV6
+Content-Disposition: form-data; name="manifest"
+Content-Type: application/json
+
+{"manifest":{"/_worker.js":"63ab2f4feb2ef757e8af4b74fa93bca2","/index.html":"502aa911641a52f9c6b216b9a8961cf6","/worker.js":"a3bbbca745699f3ad3399dfa75822e78","/wrangler.jsonc":"e71a2518bcb713e33d8fd0404090f7e9","/api/card-data.json":"8cfca46ba835039e18a9c8096c2d2db5","/assets/00_O_Louco_EN-B_ZW4WS3.jpg":"e875708e72c60464314b864821fa232f","/assets/01_O_Mago_EN-BISg8BQg.jpg":"dccc81e9679ad0459d14c636dd7eee63","/assets/02_A_Sacerdotisa_EN-TufnQTnW.jpg":"8b7707a920d508c9a1d447aa3db45a97","/assets/03_A_Imperatriz_EN-DVa-tMdn.jpg":"d235a2ce9df9f8b07ef634b458a82c74","/assets/04_O_Imperador_EN-CZuST0CO.jpg":"02f86ecef2d3541490673eb53e7207dc","/assets/05_O_Hierofante_EN-NqEuvszR.jpg":"9322a364eda400223dfd3d2c2f3398f0","/assets/06_Os_Enamorados_EN-CWDhxioG.jpg":"19e8d81b5181c39fc48cde6ca10946e1","/assets/07_O_Carro_EN-zzGJzemW.jpg":"d3d07af9074b334ee9a471ad24b33431","/assets/08_A_Forca_EN-BPvAqOkc.jpg":"581cf53f227cebe1ea7dedda4d3d936b","/assets/09_O_Eremita_EN-DxWVmOS2.jpg":"c539a4bae060d95551cef60bbb41b899","/assets/10_Wheel_of_Fortune_EN-CwbPyNCm.jpg":"7e51b871454d64644de858f25208f351","/assets/11_Justice_EN-DWPD3AJa.jpg":"093af7ac83dfcf6d5c711d48c8fdf9ba","/assets/12_The_Hanged_Man_EN-DB4iqVS3.jpg":"fc76aa4483a6f3aa41f39b945e83d90f","/assets/13_Death_EN-CzQs2lhw.jpg":"99ff1401eaac61a8659af2a30fd21890","/assets/14_Temperance_EN-NDdJhv_T.jpg":"fa49259f702610c94cc986f0cb8f4777","/assets/15_The_Devil_EN-9hffgPpC.jpg":"84c8ac829be948ea14abaea8ac35da25","/assets/16_The_Tower_EN-BEdIspzT.jpg":"e5679e7183c398e8f0bcfbcb76590c1f","/assets/17_The_Star_EN-BLb6ZSQo.jpg":"c7e1f63b50c64b5b592a8782eb94c436","/assets/18_The_Moon_EN-CUnVoxE4.jpg":"77912250e4bac5a8f62a788158379e13","/assets/19_The_Sun_EN-DWKGQJEK.jpg":"238217835e05d29c663cdb0cb8050c47","/assets/20_Judgement_EN-CwhjklXS.jpg":"f8ea643d1efe6f7af3488b44f45e30cb","/assets/21_The_World_EN-BR6mMzAm.jpg":"8e4ddcf6e36a9c4f222766565b39f110","/assets/celestial-bg-DzI1EEF6.jpg":"e9762e9faa3c10531cfe7410abde291d","/assets/index-48PCx5s0.css":"f32fc5e57b465fe5cf814899c2e33ac1","/assets/index-Bwvm469w.js":"f1484062ffbbe6ee6db4eb9226c4e764","/functions/api/daily-reading.js":"e204f9e7fdfc2a2bd984ee575c8ec4d2","/journey/the-fool-meets-01.jpg":"66f69a0c75c58825b65703dde95d0e37","/journey/the-fool-meets-02.jpg":"585acadd54ea6626aa0cc0e70b3f2702","/journey/the-fool-meets-03.jpg":"123392172f4953653e6b4e2678426173","/journey/the-fool-meets-04.jpg":"e7f6e48e972eed54933b54d8f0255c9e","/journey/the-fool-meets-05.jpg":"fd4826f43903bee1f3c1a5e533bd8ae7","/journey/the-fool-meets-06.jpg":"93e7a5a0ebf5026e09b0e8a8ea0f2a57","/journey/the-fool-meets-07.jpg":"91f624accfcea1a2e4ac9cb3225b270c","/journey/the-fool-meets-08.jpg":"34c84dccb0974fd6ce90ff99f655ddf5","/journey/the-fool-meets-09.jpg":"dc592f5ac3ae64079a4d9186ef6ecde4","/journey/the-fool-meets-10.jpg":"3f25541bf2e3bcb90cad5254909d6a0f","/journey/the-fool-meets-11.jpg":"d4da8f010b1f968973679d33fa219c7b","/journey/the-fool-meets-12.jpg":"1bc59858637b60383f0935cd97bb123e","/journey/the-fool-meets-13.jpg":"80aafd2fff9457fa85de87975c368637","/journey/the-fool-meets-14.jpg":"5a4bd235d447ed385acd22bfa4781bc6","/journey/the-fool-meets-15.jpg":"0dba667363bce38d08dcd3f465eb8bd3","/journey/the-fool-meets-16.jpg":"a14a8aa2c536849f25b337b69ab405d0","/journey/the-fool-meets-17.jpg":"764b7f344ba9644d0f6780ec3fd2145e","/journey/the-fool-meets-18.jpg":"02b581561bd32fca7014a8d50f9c463a","/journey/the-fool-meets-19.jpg":"6692b5e36e153ba86fe06a5d6a0d9e93","/journey/the-fool-meets-20.jpg":"386f2752649328e73c778898c2e7446c","/netlify/functions/daily-reading.mjs":"9ffc128fae8714e109d53fbc6366b14f"}}
+--PagesDeployBoundaryV6
+Content-Disposition: form-data; name="_worker.bundle"; filename="_worker.bundle"
+Content-Type: application/octet-stream
+
+--WorkerBundleBoundary
+Content-Disposition: form-data; name="metadata"
+Content-Type: application/json
+
+{"main_module":"bundle.mjs","compatibility_date":"2026-09-24"}
+--WorkerBundleBoundary
+Content-Disposition: form-data; name="bundle.mjs"; filename="bundle.mjs"
+Content-Type: application/javascript+module
+
+// ─── Pages _worker.js — AI reading API + static site + SPA fallback ───
+// Advanced-mode Worker for the Pages deployment.
+// - POST /api/daily-reading → Gemini-powered tarot reading (key stays server-side)
+// - everything else → static assets (env.ASSETS)
+// - unknown GET paths without a file extension → index.html (client-side routing)
+//
+// Required env var: GEMINI_API_KEY — set via:
+//   Dashboard → Workers & Pages → tarot-birth-cards-numerology →
+//   Settings → Variables and secrets → Add (type: Secret)
+
+const MODELS = ['gemini-3.8-flash', 'gemini-3.7-flash', 'gemini-3.5-flash']
+
+const MAX_QUESTION = 300
+
+const SYSTEM_PROMPT = `You are the voice of a tarot and numerology site called "Tarot Birth Cards & Numerology". You speak for the Major Arcana card drawn for the day.
+
+Voice rules:
+- Mystical but grounded: warm, wise, unhurried; second person ("you").
+- Never generic horoscope filler — use the specific card material given to you.
+- Weave in the card's keywords naturally, and touch both its light and its shadow.
+- Close with one short, practical line of guidance the reader can act on today.
+- Reflection and entertainment only: if the question touches health, law or money, answer reflectively and gently decline to give professional advice.
+- 3 short paragraphs, plain text, no headings, no bullet points, no disclaimers.`
+
+function drawCardOfTheDay(cards) {
+  const seed = Number(new Date().toISOString().slice(0, 10).replace(/-/g, ''))
+  return cards[seed % cards.length]
+}
+
+const hits = new Map()
+function rateLimited(ip) {
+  const now = Date.now()
+  const list = (hits.get(ip) ?? []).filter((t) => now - t < 60_000)
+  if (list.length >= 10) return true
+  list.push(now)
+  hits.set(ip, list)
+  return false
+}
+
+function json(body, status = 200) {
+  return Response.json(body, { status })
+}
+
+async function handleDailyReading(request, env) {
+  const apiKey = env.GEMINI_API_KEY
+  if (!apiKey) return json({ configured: false })
+
+  const ip = request.headers.get('cf-connecting-ip') ?? 'unknown'
+  if (rateLimited(ip)) return json({ error: 'Slow down — the cards need a moment.' }, 429)
+
+  let question = ''
+  try {
+    const body = await request.json()
+    question = String(body?.question ?? '').trim().slice(0, MAX_QUESTION)
+  } catch {
+    /* empty body is fine — a question is optional */
+  }
+
+  const origin = new URL(request.url).origin
+  const cardsRes = await fetch(`${origin}/api/card-data.json`)
+  if (!cardsRes.ok) return json({ error: 'Card deck not found.' }, 502)
+  const CARDS = await cardsRes.json()
+  const card = drawCardOfTheDay(CARDS)
+
+  const prompt = `Card of the day: ${card.name} (${card.num}).
+Keywords: ${card.keywords.join(', ')}
+Meaning: ${card.meaning}
+Shadow: ${card.shadow}
+Guidance: ${card.guidance}
+
+${question ? `The reader's question: "${question}"` : 'The reader asked no question — read the card as general guidance for their day.'}`
+
+  for (const model of MODELS) {
+    const res = await fetch(
+      `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`,
+      {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          systemInstruction: { parts: [{ text: SYSTEM_PROMPT }] },
+          contents: [{ parts: [{ text: prompt }] }],
+          generationConfig: { temperature: 0.85, maxOutputTokens: 700 },
+        }),
+      },
+    )
+    if (res.status === 404 || res.status === 403) continue
+    if (!res.ok) return json({ error: 'The oracle stumbled — try again in a moment.' }, 502)
+    const data = await res.json()
+    const reading = data?.candidates?.[0]?.content?.parts?.map((p) => p.text).join('').trim()
+    if (!reading) return json({ error: 'The cards came back blank — try again.' }, 502)
+    return json({ configured: true, num: card.num, name: card.name, keywords: card.keywords, reading })
+  }
+  return json({ error: 'No Gemini model available — check GEMINI_API_KEY.' }, 502)
+}
+
+export default {
+  async fetch(request, env) {
+    const url = new URL(request.url)
+
+    if (url.pathname === '/api/daily-reading') {
+      if (request.method === 'POST') return handleDailyReading(request, env)
+      return json({ error: 'POST only' }, 405)
+    }
+
+    const assetRes = await env.ASSETS.fetch(request)
+    if (assetRes.status === 404 && request.method === 'GET' && !url.pathname.includes('.')) {
+      // SPA fallback: client-side routes like /library, /pairs, /astrology
+      return env.ASSETS.fetch(new URL('/index.html', request.url).toString())
+    }
+    return assetRes
+  },
+}
+
+--WorkerBundleBoundary--
+--PagesDeployBoundaryV6
+Content-Disposition: form-data; name="branch"
+
+main
+--PagesDeployBoundaryV6
+Content-Disposition: form-data; name="commit_message"
+
+Add Pages advanced-mode _worker.js for /api/daily-reading (Gemini)
+--PagesDeployBoundaryV6--
