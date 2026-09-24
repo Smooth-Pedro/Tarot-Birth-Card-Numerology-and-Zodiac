@@ -142,9 +142,6 @@ function cardsLayer(dateA: string, dateB: string): SynastryLayer {
     })
     score = 62
   }
-  const kws = (chain: number[]) =>
-    chain.flatMap((n) => (n >= 0 && n <= 21 ? [] : []))
-  void kws
   const giftA = ca.chain[0]
   const giftB = cb.chain[0]
   details.push({
