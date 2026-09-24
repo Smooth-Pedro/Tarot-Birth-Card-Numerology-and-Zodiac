@@ -3,6 +3,10 @@ import { Routes, Route, useLocation } from 'react-router'
 import Home from './pages/Home'
 import LibraryPage from './pages/LibraryPage'
 import PairsPage from './pages/PairsPage'
+import AstrologyPage from './pages/AstrologyPage'
+import SynastryPage from './pages/SynastryPage'
+import AstroLibraryPage from './pages/AstroLibraryPage'
+import NumerologyLibraryPage from './pages/NumerologyLibraryPage'
 
 /** Smooth-scroll to the hash target after a route change; top otherwise */
 function ScrollManager() {
@@ -99,6 +103,10 @@ export default function App() {
         <Route path="/" element={<Home />} />
         <Route path="/library" element={<LibraryPage />} />
         <Route path="/pairs" element={<PairsPage />} />
+        <Route path="/astrology" element={<AstrologyPage />} />
+        <Route path="/synastry" element={<SynastryPage />} />
+        <Route path="/astrology-library" element={<AstroLibraryPage />} />
+        <Route path="/numerology-library" element={<NumerologyLibraryPage />} />
         <Route path="*" element={<Home />} />
       </Routes>
     </>
