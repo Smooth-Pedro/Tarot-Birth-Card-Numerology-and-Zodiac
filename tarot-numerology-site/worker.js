@@ -1,7 +1,7 @@
 // Worker entrypoint: AI reading API + static site.
 // - POST /api/daily-reading → Gemini-powered tarot reading (key stays server-side)
 // - everything else → the static site files (env.ASSETS)
-import { onRequestPost, onRequest } from './tarot-numerology-site/functions/api/daily-reading.js'
+import { onRequestPost, onRequest } from './functions/api/daily-reading.js'
 
 export default {
   async fetch(request, env, ctx) {
