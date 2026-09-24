@@ -91,7 +91,7 @@ function WheelCell({
         {sign.glyph} {sign.name}
       </a>
       <span className="text-[10px] text-indigo-300/50 leading-tight">
-        {sign.card === undefined ? '' : ''}Card {sign.card}
+        wears card {sign.card}
       </span>
       {bodies.length > 0 ? (
         <ul className="space-y-1 mt-auto">
