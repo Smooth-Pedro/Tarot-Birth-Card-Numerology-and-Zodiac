@@ -105,7 +105,8 @@ export default {
     const assetRes = await env.ASSETS.fetch(request)
     if (assetRes.status === 404 && request.method === 'GET' && !url.pathname.includes('.')) {
       // SPA fallback: client-side routes like /library, /pairs, /astrology
-      return env.ASSETS.fetch(new URL('/index.html', request.url).toString())
+      // (Pages serves the root index.html asset at "/", not at "/index.html")
+      return env.ASSETS.fetch(new URL('/', request.url))
     }
     return assetRes
   },
