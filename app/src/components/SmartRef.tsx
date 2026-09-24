@@ -43,15 +43,27 @@ export function SiteNav() {
   const item = 'font-cinzel text-xs tracking-[0.25em] uppercase text-indigo-300/60 hover:text-amber-200 transition-colors'
   const cls = (isActive: boolean) => item + (isActive ? ' text-amber-300/90' : '')
   return (
-    <nav className="absolute top-4 right-5 z-20 flex gap-5">
+    <nav className="absolute top-4 right-5 z-20 flex flex-wrap justify-end gap-x-4 gap-y-1 max-w-[70vw]">
       <NavLink to="/" end className={({ isActive }) => cls(isActive)}>
-        ✦ Reading
+        Reading
+      </NavLink>
+      <NavLink to="/astrology" className={({ isActive }) => cls(isActive)}>
+        The Sky
+      </NavLink>
+      <NavLink to="/synastry" className={({ isActive }) => cls(isActive)}>
+        Synastry
       </NavLink>
       <NavLink to="/library" className={({ isActive }) => cls(isActive)}>
-        The Library
+        Cards
+      </NavLink>
+      <NavLink to="/numerology-library" className={({ isActive }) => cls(isActive)}>
+        Numbers
+      </NavLink>
+      <NavLink to="/astrology-library" className={({ isActive }) => cls(isActive)}>
+        Cosmos
       </NavLink>
       <NavLink to="/pairs" className={({ isActive }) => cls(isActive)}>
-        The Pairs
+        Pairs
       </NavLink>
     </nav>
   )
