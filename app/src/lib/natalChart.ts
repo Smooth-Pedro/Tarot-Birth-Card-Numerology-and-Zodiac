@@ -54,7 +54,7 @@ function toBody(key: string, raw: LibBody, ascIndex: number | null): ChartBody {
   const abs = Number(raw?.ChartPosition?.Ecliptic?.DecimalDegrees ?? 0) % 360
   const sign = raw?.Sign?.key ? getSign(raw.Sign.key.toLowerCase()) : SIGNS[0]
   const planet = getPlanet(key)
-  const decan = decanAt(abs)
+  const decan = decanAt(abs).decan
   const house = ascIndex === null ? null : ((SIGNS.indexOf(sign) - ascIndex + 12) % 12) + 1
   return {
     key,
