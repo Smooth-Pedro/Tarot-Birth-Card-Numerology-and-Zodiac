@@ -1,7 +1,7 @@
 import TarotCardFace from '@/components/TarotCardFace'
 import { formatDegree, type ChartBody, type NatalChart } from '@/lib/natalChart'
 import type { SignInfo } from '@/lib/astrology'
-import { getHouse } from '@/lib/astrology'
+import { getHouse, SIGNS } from '@/lib/astrology'
 
 /** Small badge for the Minor Arcana of a decan (no artwork — styled chip) */
 function DecanBadge({ body }: { body: ChartBody }) {
