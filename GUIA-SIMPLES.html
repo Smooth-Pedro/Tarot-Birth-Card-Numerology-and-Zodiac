@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Site — Explained Like You're 10</title>
+<style>
+  :root { --amber: #f5c26b; --bg: #141210; --panel: #1e1b17; --line: #3a332a; }
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: Georgia, 'Times New Roman', serif; background: var(--bg); color: #e8e0d0; line-height: 1.65; }
+  main { max-width: 820px; margin: 0 auto; padding: 40px 20px 80px; }
+  h1 { color: var(--amber); font-size: 2rem; border-bottom: 2px solid var(--line); padding-bottom: 12px; }
+  h2 { color: var(--amber); font-size: 1.35rem; margin-top: 48px; }
+  h3 { color: #d8c9a8; font-size: 1.05rem; margin-top: 28px; }
+  .panel { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 18px 22px; margin: 14px 0; }
+  .big { font-size: 1.1rem; font-weight: bold; color: #fff; }
+  .warn { border-left: 4px solid #e07a5f; }
+  .good { border-left: 4px solid #81b29a; }
+  code { background: #2a251f; color: var(--amber); padding: 2px 7px; border-radius: 5px; font-family: Consolas, monospace; font-size: 0.9em; }
+  li { margin: 6px 0; }
+  table { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 0.95rem; }
+  th, td { border: 1px solid var(--line); padding: 8px 12px; text-align: left; vertical-align: top; }
+  th { color: var(--amber); background: #221e19; }
+  .muted { color: #9a8f7a; font-size: 0.9rem; }
+</style>
+</head>
+<body>
+<main>
+
+<h1>🃏 The Tarot Site — Explained Like You're 10</h1>
+<p class="muted">Last updated: 2026-09-24. Read this when something breaks or you forgot how it works.</p>
+
+<div class="panel good">
+  <p class="big">The one-sentence version:</p>
+  <p>This is a <b>fortune-telling website</b>. A visitor types their birthday (and optionally birth time + city) and the site shows their <b>tarot cards, numbers, zodiac signs</b> — and how compatible they are with another person. It has no server and no database: <b>everything is math done in the visitor's own browser.</b></p>
+</div>
+
+<h2>1. How it works (the toy-box analogy)</h2>
+<div class="panel">
+  <p>Imagine the site is a <b>board game in a box</b>:</p>
+  <ul>
+    <li><b>The box</b> = the folder on your computer. Everything the game needs is inside it.</li>
+    <li><b>The rulebook</b> = the code files (they say: "if birthday is X, card is Y").</li>
+    <li><b>The cards and pictures</b> = image files (the pretty art).</li>
+    <li><b>The build</b> = packing the box. One command squishes everything into a tidy <code>dist</code> folder.</li>
+    <li><b>The deploy folder</b> (<code>tarot-numerology-site/</code>) = the packed box, ready to ship to any web host.</li>
+  </ul>
+  <p><b>IMPORTANT:</b> there is <b>no internet magic</b> during a reading. No accounts, no saving, no calls to other websites. A birthday goes in, cards come out — like a calculator.</p>
+</div>
+
+<h2>2. The 7 pages of the site</h2>
+<table>
+  <tr><th>Page (address)</th><th>What it does</th></tr>
+  <tr><td><code>/</code> Home</td><td>The main experience: type a birthday → tarot birth cards, life path number, and a "tarot map" of the whole birth date. Background art changes with the time of day (the Fool's Journey).</td></tr>
+  <tr><td><code>/astrology</code> The Sky</td><td>The <b>birth chart</b>: Sun, Moon, 10 planets, each with its zodiac sign, degree, matching tarot card and decan. Birth time + city are optional but unlock the <b>Ascendant, houses and a 12-house tarot wheel</b>. 617 cities to pick from.</td></tr>
+  <tr><td><code>/synastry</code> Synastry</td><td><b>Compatibility between two people.</b> Four layers you can turn on/off: zodiac signs, tarot card links, numerology, and full chart aspects. Gives one combined score.</td></tr>
+  <tr><td><code>/library</code> Cards</td><td>Library explaining all 22 Major Arcana.</td></tr>
+  <tr><td><code>/numerology-library</code> Numbers</td><td>Library explaining every numerology position (9 of them) and every number (1–9, 11, 22, 33) in depth.</td></tr>
+  <tr><td><code>/astrology-library</code> Cosmos</td><td>Library explaining all 12 zodiac signs and all 12 houses — <b>separate</b> from the card library, as you asked.</td></tr>
+  <tr><td><code>/pairs</code> Pairs</td><td>Library of card pair meanings.</td></tr>
+</table>
+
+<h2>3. Where everything lives (the map)</h2>
+<table>
+  <tr><th>Folder / file</th><th>What it is</th></tr>
+  <tr><td><code>app/src/pages/</code></td><td>One file per page (Home, AstrologyPage, SynastryPage, the libraries...). <b>To change what a page says, change its file here.</b></td></tr>
+  <tr><td><code>app/src/lib/</code></td><td>The <b>brain</b>. Plain text files with all the data: card meanings, number meanings, sign meanings, the 617-city list, the math for charts and compatibility.</td></tr>
+  <tr><td><code>app/src/assets/cards/</code></td><td>The card face images. Naming rule: <code>NN_Name_EN.jpg</code> (two digits + _EN.jpg). Follow the rule and you can swap an image without touching code.</td></tr>
+  <tr><td><code>app/public/journey/</code></td><td>The 20 background story images (<code>the-fool-meets-01.jpg</code> … <code>-20.jpg</code>). Swap the file, keep the name — the site picks it up automatically.</td></tr>
+  <tr><td><code>app/dist/</code></td><td>The packed box (auto-generated). <b>Never edit by hand.</b></td></tr>
+  <tr><td><code>tarot-numerology-site/</code></td><td>The copy of <code>dist</code> ready to upload to a host. <b>Never edit by hand either</b> — it is rebuilt every time.</td></tr>
+  <tr><td><code>REBUILD.bat</code></td><td><b>Your best friend.</b> Double-click it to pack everything again. If the site looks old after a change, you forgot to run this.</td></tr>
+  <tr><td><code>CONTEXTO.md</code></td><td>The memory file the AI assistant reads to continue the project in a new chat. Don't edit it by hand — ask the assistant to update it.</td></tr>
+  <tr><td><code>ESTADO-DO-PROJETO.md</code></td><td>Technical documentation of the code. May be slightly behind after the astrology work (see "Still to do").</td></tr>
+</table>
+
+<h2>4. The golden rules (⚠️ read these)</h2>
+<div class="panel warn">
+  <ol>
+    <li><b>Never edit <code>tarot-numerology-site/</code> or <code>app/dist/</code> by hand.</b> They are rebuilt from the source. Hand-edits vanish on the next build.</li>
+    <li><b>After any change, run <code>REBUILD.bat</code></b> (double-click). The site only shows what was packed last.</li>
+    <li><b>The build is also a spell-checker.</b> If you (or the AI) type something wrong in the data files, the build <b>fails on purpose</b> and shows the exact file and line. A red screen with an error is <b>good news</b> — it caught a typo before it reached visitors.</li>
+    <li><b>One hidden trick keeps the astrology alive:</b> in <code>app/vite.config.ts</code> there's an <b>alias</b> pointing the astrology library to its <code>dist</code> file. <b>Never delete that alias</b> or the Sky page breaks.</li>
+    <li><b>Images keep their names.</b> Replace the file, don't rename it. The code finds pictures by name.</li>
+    <li>The site is <b>English-only</b>, by decision. City names may look Portuguese (Nápoles, Turim) — that's fine, they were added for you.</li>
+  </ol>
+</div>
+
+<h2>5. Everyday tasks (how do I…)</h2>
+<h3>…change what a card or number means?</h3>
+<p>Open the matching file in <code>app/src/lib/</code> (card meanings: <code>tarot.ts</code>; numbers: <code>numerology.ts</code> + <code>numerologyParts.ts</code>; signs/houses: <code>astrology.ts</code>), edit the text, run <code>REBUILD.bat</code>.</p>
+<h3>…swap a picture?</h3>
+<p>Save the new image <b>with the exact same file name</b> over the old one in <code>app/public/journey/</code> or <code>app/src/assets/cards/</code>, then run <code>REBUILD.bat</code>.</p>
+<h3>…publish the site on the internet?</h3>
+<p>The site is <b>not online yet</b>. When you pick a host (Netlify, Cloudflare Pages, GitHub Pages…), just upload the <b>contents</b> of <code>tarot-numerology-site/</code>. There's nothing else to configure — no database, no keys, no server.</p>
+<h3>…see the site while working on it?</h3>
+<p>Run <code>npm run dev</code> in the project folder and open the local address it prints (port 7100).</p>
+
+<h2>6. Troubleshooting cheat-sheet</h2>
+<table>
+  <tr><th>Symptom</th><th>Most likely cause</th><th>Fix</th></tr>
+  <tr><td>"I changed something but the site looks the same"</td><td>Build not run after the change</td><td>Double-click <code>REBUILD.bat</code></td></tr>
+  <tr><td>Build fails with a red error</td><td>A typo in a data file (the error names the file and line)</td><td>Fix that exact line, rebuild</td></tr>
+  <tr><td>Astrology page doesn't load</td><td>The alias in <code>vite.config.ts</code> got removed</td><td>Put the alias back (see CONTEXTO.md, "Gotcha técnico")</td></tr>
+  <tr><td>New image doesn't show</td><td>Wrong name or wrong folder</td><td>Name must be exactly like the old one (<code>the-fool-meets-05.jpg</code> / <code>05_Hierophant_EN.jpg</code> style), then rebuild</td></tr>
+  <tr><td>Sky chart looks wrong for someone</td><td>Missing birth time/city — chart math needs a place on Earth</td><td>Normal. Without time it shows planets without houses, and warns honestly. Not a bug.</td></tr>
+  <tr><td>A city is missing from the list</td><td>617 cities cover a lot but not everything</td><td>Ask the assistant: "add city X" — it's a one-line entry with its map coordinates</td></tr>
+</table>
+
+<h2>7. Done ✅ vs Still to do 🔨</h2>
+<div class="panel good">
+  <p class="big">DONE (all built and tested):</p>
+  <ul>
+    <li>Tarot birth cards + numerology + tarot map of the birth date (Home)</li>
+    <li>Birth chart with signs, planets, cards, houses (The Sky) — verified against real star tables</li>
+    <li>Two-person compatibility, 4 layers (Synastry)</li>
+    <li>Three separate libraries: Cards, Numbers, Cosmos (signs + houses)</li>
+    <li>617 cities, full Brazilian interior coverage (Petrópolis included)</li>
+    <li>Background art that follows the time of day</li>
+  </ul>
+</div>
+<div class="panel warn">
+  <p class="big">STILL TO DO:</p>
+  <ul>
+    <li><b>Put the site online</b> — the packed folder is waiting; pick a host and upload it</li>
+    <li><b>Journey text #12 (Hanged Man)</b> — picture was replaced (now it's the Fool himself) but the old text still describes meeting a stranger. Needs a rewrite.</li>
+    <li><b>Journey images #16–20</b> — still AI-generated art; 01–15 are your versions</li>
+    <li><b>Refresh <code>ESTADO-DO-PROJETO.md</code></b> — technical docs lag behind the new astrology pages</li>
+  </ul>
+</div>
+
+<p class="muted">Made to be read in 5 minutes. When in doubt: don't fix by hand — describe the problem to the assistant and point at this file.</p>
+
+</main>
+</body>
+</html>
