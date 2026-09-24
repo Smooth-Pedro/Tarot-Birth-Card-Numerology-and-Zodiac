@@ -16,8 +16,9 @@ Existe também a skill **`salvar-contexto`** (mesma pasta de skills): use quando
 - **Build/deploy**: `REBUILD.bat` (duplo clique) para o usuário; agentes rodam `npm run build` com o PATH do `.tools` (ver `REBUILD.bat`), depois apagam e recopiam `app/dist` → `tarot-numerology-site/`. NÃO existem `scripts/rebuild_deploy.sh` nem `scripts/normalize_image.py` (a skill menciona, o projeto não tem) — normalizar imagem = Pillow do `python` gerenciado (redimensionar mantendo proporção, salvar JPG q82; proporções variadas são aceitas, componentes usam `w-full h-auto object-contain`).
 - Código-fonte documentado em `ESTADO-DO-PROJETO.md` (raiz do workspace).
 
-## 3. Estado atual (atualizado em 2026-09-23)
+## 3. Estado atual (atualizado em 2026-09-24)
 - Site pronto e compilado; pasta de deploy atualizada. **Sem deploy no ar** — arrastar `tarot-numerology-site/` pro host quando o usuário escolher o serviço.
+- **24/09 — Pesquisa de astrologia / tarot birth chart / sinastria concluída** (achados completos na nova seção 7). Nada de código implementado ainda — o usuário pediu pesquisa e análise primeiro. CONTEXTO.md agora também mora na raiz do workspace (cópia fiel do de Downloads).
 - **Jornada do Fool — artes 01–15 agora são versões do usuário** (`C:\Users\pudlo\OneDrive\Documents\The Fool's Journey\`); 16–20 ainda são as geradas. Proporções variadas (panoramas ~2,36:1; 01 e 12 são retrato) — por isso imagens da jornada usam `w-full h-auto object-contain` (quadro natural, sem crop).
   - **10 Wheel of Fortune**: arte trocada + **texto reescrito** — o Hermit (pós-9) tem a visão do infinito e de como tudo se conecta, vê a Roda no céu e recebe a oferta de voltar a ser jovem. Gancho p/ futuro: ele aceita e rejuvezce (arte 11 mostra o Fool jovem de novo).
   - **11 Justice**: arte trocada (Fool jovem diante da Justiça, cartas dos encontros no chão).
