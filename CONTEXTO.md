@@ -62,3 +62,32 @@ Ideias discutidas para monetizar/expandir o site (nada implementado ainda):
 5. **Regra vara+mochila nas artes 01–05 e 11** (oferecido, usuário ainda não respondeu): aplicar o mesmo tratamento (chão ou cão) se quiser consistência total — hoje lá a pose clássica de ombro continua (mão esquerda livre, mão direita segura a vara).
 6. Variante de Temperance (`the_fool_meets_014 .png`) ficou na pasta do usuário — trocar pela instalada (`TEMPERANCE.png`) se preferir a outra.
 7. **Rodar `salvar-contexto` automaticamente ao fim de cada sessão de trabalho no site** (oferecido em 23/09 — aguardando resposta do usuário).
+8. **Escopo da astrologia** (usuário pediu pesquisa primeiro — feita em 24/09): só solar vs. mapa completo (lua/ascendente/planetas/casas); entrar antes ou depois de contas por email; rota `/astrology` vs. seção nos resultados.
+9. **Modelo do "mapa astral de tarot"**: numérico (partes da data → arcanos) vs. astrológico (casas + cartas de signos/planetas) vs. híbrido dos dois.
+10. **Sinastria**: quais camadas (signos × birth cards × numerologia), score único vs. camadas separadas, rota nova vs. extensão de `/pairs`.
+
+## 7. Pesquisa técnica — Astrologia, Tarot Birth Chart & Sinastria (24/09/2026)
+
+### Cálculo astrológico client-side
+- **`circular-natal-horoscope-js`** (npm, GitHub 0xStarcat/CircularNatalHoroscopeJS): JS puro, roda no browser, sem backend. `Origin({year, month(0–11), date, hour, minute, latitude, longitude})` deriva timezone e UTC sozinho (inclui horário de verão histórico); `Horoscope` devolve Ascendente, MC, 10 planetas, nodos/Lilith, casas (placidus, whole-sign, equal-house, koch, regiomontanus, campanus, topocentric), trópico ou sideral, aspectos com orbs configuráveis e retrogradação. Base: efemérides Moshier + Jean Meeus. Funciona com TypeScript. É a recomendação principal.
+- Alternativa `astronomy-engine` (MIT; o synastrychart.org a usa no browser): posições planetares precisas, mas **sem ascendente/casas** — serviria só pra sinastria por aspectos. Swiss Ephemeris wasm existe, mas é bem mais pesado.
+- Regra de formulário: **data obrigatória; hora e cidade opcionais**. Sem hora → Sol/Lua calculados normalmente (a Lua anda 12–15°/dia, então há risco de cúspide); sem hora **não mostrar ascendente** (deckaura/astrologyrising usam 12:00 e marcam o ascendente como "estimado" — melhor omitir).
+- Geocoding da cidade: precisa de uma fonte de lat/lng por cidade. Opções: lista embutida das principais cidades (zero dependência) ou API de geocoding (precisa chave). Decisão pendente.
+
+### Correspondências tarot × astrologia (Golden Dawn / Book T)
+- Signos → Maiores: Áries 4 Emperor, Touro 5 Hierophant, Gêmeos 6 Lovers, Câncer 7 Chariot, Leão 8 Strength, Virgem 9 Hermit, Libra 11 Justice, Escorpião 13 Death, Sagitário 14 Temperance, Capricórnio 15 Devil, Aquário 17 Star, Peixes 18 Moon.
+- Planetas → Maiores: Mercúrio 1 Magician, Lua 2 High Priestess, Vênus 3 Empress, Marte 16 Tower, Júpiter 10 Wheel of Fortune, Saturno 21 World, Sol 19 Sun; atribuições modernas: Urano 0 Fool, Netuno 12 Hanged Man, Plutão 20 Judgement.
+- Decanatos (36 decans de 10° ↔ menores numerados 2–10): naipe = elemento do signo (Wands=Fogo, Cups=Água, Swords=Ar, Pentacles=Terra); 2–4 = signos cardinais, 5–7 = fixos, 8–10 = mutáveis; começa em Áries I = 2 of Wands. Permite a "carta do grau exato" do Sol/Lua (ex.: Sol a 15° de Touro = 6 of Pentacles).
+- Fontes: tarotologist.com/astrology (tabela Book T), kerykeion.net e thalira.com (decans).
+
+### Tarot birth chart — como os sites existentes fazem
+- **Birth card calculators** (o que o site já faz): tarot.com, deckaura.com, mysticmondays — método Tarot School: MM+DD+centúria+ano, reduzir a ≤21, depois soul card (às vezes tripla no 19).
+- **"Birth Chart Tarot Spread"** (The Tarot Zodiac, Substack): usa o mapa natal de verdade; coloca a carta de cada signo nas 12 casas (whole-sign) e a carta de cada planeta ao lado da carta do signo onde ele está (ex.: Mercúrio em Aquário = Magician junto da Star). Exige data+hora+local.
+- **"Birth year card"** (numerologia do ano): ano reduzido a 1–9 mapeado pra arcano+planeta (matéria do Yahoo/Parade). **Year card pessoal** (Greer): dia+mês+ano corrente reduzidos.
+- **Destiny Matrix** (Natalia Ladini, 2006): octagrama de 22 arcanos derivado só da data (centro, pontos cardeais, linhas amor/dinheiro, cauda kármica); vários sites no ar (datemyst, destinymatrixcalc, theastroscope) — valida que existe mercado pra "mapa de tarot por data".
+
+### Sinastria — referências
+- **deckaura.com/pages/synastry-calculator**: compara Sol/Lua/Ascendente por elementos (Fogo+Ar se energizam, Terra+Água se nutrem) com score; funciona só com as datas.
+- **synastrychart.org**: sinastria completa por aspectos, 100% no browser com astronomy-engine; score ponderado (Vênus–Marte pesa mais que Mercúrio–Saturno).
+- **Destiny Matrix compat** (destinymatrixcalc.com): soma posição a posição das duas matrizes, redução subtrai-22 → "terceira energia" do casal (energia comum, karma, canal financeiro, zonas de tensão).
+- **astromix.net** (sinastria clássica): Vênus/Marte = química, Saturno = estabilidade, overlay de casas 4/5/7/8 ativados pelos planetas do parceiro.
