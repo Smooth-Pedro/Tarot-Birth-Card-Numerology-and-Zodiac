@@ -70,26 +70,31 @@ Guidance: ${card.guidance}
 ${question ? `The reader's question: "${question}"` : 'The reader asked no question — read the card as general guidance for their day.'}`
 
   for (const model of MODELS) {
-    const res = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`,
-      {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          systemInstruction: { parts: [{ text: SYSTEM_PROMPT }] },
-          contents: [{ parts: [{ text: prompt }] }],
-          generationConfig: { temperature: 0.85, maxOutputTokens: 1024 },
-        }),
-      },
-    )
-    if (res.status === 404 || res.status === 403 || res.status === 429 || res.status >= 500) continue
-    if (!res.ok) return json({ error: 'The oracle stumbled — try again in a moment.' }, 502)
-    const data = await res.json()
-    const cand = data?.candidates?.[0]
-    const reading = cand?.content?.parts?.map((p) => p.text).join('').trim()
-    if (cand?.finishReason && cand.finishReason !== 'STOP') continue
-    if (!reading) continue
-    return json({ configured: true, num: card.num, name: card.name, keywords: card.keywords, reading })
+    try {
+      const res = await fetch(
+        `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`,
+        {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            systemInstruction: { parts: [{ text: SYSTEM_PROMPT }] },
+            contents: [{ parts: [{ text: prompt }] }],
+            generationConfig: { temperature: 0.85, maxOutputTokens: 1024 },
+          }),
+        },
+      )
+      if (res.status === 404 || res.status === 403 || res.status === 429 || res.status >= 500) continue
+      if (!res.ok) return json({ error: 'The oracle stumbled — try again in a moment.' }, 502)
+      const data = await res.json()
+      const cand = data?.candidates?.[0]
+      const reading = cand?.content?.parts?.map((p) => p.text).join('').trim()
+      if (cand?.finishReason && cand.finishReason !== 'STOP') continue
+      if (!reading) continue
+      return json({ configured: true, num: card.num, name: card.name, keywords: card.keywords, reading })
+    } catch {
+      // network-level failure (DNS/TLS/reset) — try the next model
+      continue
+    }
   }
   return json({ error: 'The cards are catching their breath — try again in a moment.' }, 502)
 }
@@ -99,8 +104,13 @@ export default {
     const url = new URL(request.url)
 
     if (url.pathname === '/api/daily-reading') {
-      if (request.method === 'POST') return handleDailyReading(request, env)
-      return json({ error: 'POST only' }, 405)
+      if (request.method !== 'POST') return json({ error: 'POST only' }, 405)
+      try {
+        return await handleDailyReading(request, env)
+      } catch {
+        // never surface a raw worker exception — always answer in-voice
+        return json({ error: 'The cards are catching their breath — try again in a moment.' }, 502)
+      }
     }
 
     const assetRes = await env.ASSETS.fetch(request)
