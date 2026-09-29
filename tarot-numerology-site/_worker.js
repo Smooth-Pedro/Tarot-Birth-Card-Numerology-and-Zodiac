@@ -79,7 +79,7 @@ ${question ? `The reader's question: "${question}"` : 'The reader asked no quest
           body: JSON.stringify({
             systemInstruction: { parts: [{ text: SYSTEM_PROMPT }] },
             contents: [{ parts: [{ text: prompt }] }],
-            generationConfig: { temperature: 0.85, maxOutputTokens: 1024 },
+            generationConfig: { temperature: 0.85, maxOutputTokens: 8192 },
           }),
         },
       )
@@ -88,7 +88,14 @@ ${question ? `The reader's question: "${question}"` : 'The reader asked no quest
       const data = await res.json()
       const cand = data?.candidates?.[0]
       const reading = cand?.content?.parts?.map((p) => p.text).join('').trim()
-      if (cand?.finishReason && cand.finishReason !== 'STOP') continue
+      if (cand?.finishReason && cand.finishReason !== 'STOP') {
+        // thinking models can hit the cap mid-sentence — a substantial reading
+        // is still far better than none
+        if (cand.finishReason === 'MAX_TOKENS' && reading && reading.length >= 300) {
+          return json({ configured: true, num: card.num, name: card.name, keywords: card.keywords, reading })
+        }
+        continue
+      }
       if (!reading) continue
       return json({ configured: true, num: card.num, name: card.name, keywords: card.keywords, reading })
     } catch {
