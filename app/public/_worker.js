@@ -43,6 +43,8 @@ function json(body, status = 200) {
 
 async function handleDailyReading(request, env) {
   const apiKey = env.GEMINI_API_KEY
+  const debug = request.headers.get('x-debug') === '1'
+  const diag = { keyLen: apiKey ? apiKey.length : null, keyHead: apiKey ? apiKey.slice(0, 6) : null, models: [] }
   if (!apiKey) return json({ configured: false })
 
   const ip = request.headers.get('cf-connecting-ip') ?? 'unknown'
@@ -70,6 +72,7 @@ Guidance: ${card.guidance}
 ${question ? `The reader's question: "${question}"` : 'The reader asked no question — read the card as general guidance for their day.'}`
 
   for (const model of MODELS) {
+    const t0 = Date.now()
     try {
       const res = await fetch(
         `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`,
@@ -83,8 +86,15 @@ ${question ? `The reader's question: "${question}"` : 'The reader asked no quest
           }),
         },
       )
-      if (res.status === 404 || res.status === 403 || res.status === 429 || res.status >= 500) continue
-      if (!res.ok) return json({ error: 'The oracle stumbled — try again in a moment.' }, 502)
+      const ms = Date.now() - t0
+      if (res.status === 404 || res.status === 403 || res.status === 429 || res.status >= 500) {
+        if (debug) diag.models.push({ model, status: res.status, ms, body: (await res.text()).slice(0, 120) })
+        continue
+      }
+      if (!res.ok) {
+        if (debug) diag.models.push({ model, status: res.status, ms, body: (await res.text()).slice(0, 120) })
+        return json(debug ? { ...diag, error: 'oracle stumbled' } : { error: 'The oracle stumbled — try again in a moment.' }, 502)
+      }
       const data = await res.json()
       const cand = data?.candidates?.[0]
       const reading = cand?.content?.parts?.map((p) => p.text).join('').trim()
@@ -94,16 +104,21 @@ ${question ? `The reader's question: "${question}"` : 'The reader asked no quest
         if (cand.finishReason === 'MAX_TOKENS' && reading && reading.length >= 300) {
           return json({ configured: true, num: card.num, name: card.name, keywords: card.keywords, reading })
         }
+        if (debug) diag.models.push({ model, status: 200, ms, finishReason: cand.finishReason, len: reading ? reading.length : 0 })
         continue
       }
-      if (!reading) continue
+      if (!reading) {
+        if (debug) diag.models.push({ model, status: 200, ms, empty: true })
+        continue
+      }
       return json({ configured: true, num: card.num, name: card.name, keywords: card.keywords, reading })
-    } catch {
+    } catch (e) {
       // network-level failure (DNS/TLS/reset) — try the next model
+      if (debug) diag.models.push({ model, threw: String(e).slice(0, 150), ms: Date.now() - t0 })
       continue
     }
   }
-  return json({ error: 'The cards are catching their breath — try again in a moment.' }, 502)
+  return json(debug ? diag : { error: 'The cards are catching their breath — try again in a moment.' }, debug ? 200 : 502)
 }
 
 export default {
