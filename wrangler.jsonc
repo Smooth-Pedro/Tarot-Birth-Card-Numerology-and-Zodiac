@@ -1,0 +1,14 @@
+// Deploy config for the GitHub-connected Cloudflare Worker.
+// Lives at the REPO ROOT — Cloudflare's build only looks here.
+// - static site served from ./tarot-numerology-site
+// - /api/daily-reading handled by the worker (Gemini AI reading, key server-side)
+// - SPA fallback: unknown paths serve index.html (client-side routing)
+{
+  "name": "tarot-birth-card-numerology-and-zodiac",
+  "main": "tarot-numerology-site/_worker.js",
+  "compatibility_date": "2026-01-01",
+  "assets": {
+    "directory": "./tarot-numerology-site",
+    "not_found_handling": "single-page-application"
+  }
+}
