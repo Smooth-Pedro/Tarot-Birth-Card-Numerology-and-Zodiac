@@ -8,7 +8,7 @@
 //   Dashboard → Workers & Pages → tarot-birth-cards-numerology →
 //   Settings → Variables and secrets → Add (type: Secret)
 
-const MODELS = ['gemini-3.8-flash', 'gemini-3.7-flash', 'gemini-3.5-flash']
+const MODELS = ['gemini-3.6-flash', 'gemini-3-flash-preview', 'gemini-3.8-flash', 'gemini-3.7-flash', 'gemini-flash-latest']
 
 const MAX_QUESTION = 300
 
@@ -31,7 +31,7 @@ const hits = new Map()
 function rateLimited(ip) {
   const now = Date.now()
   const list = (hits.get(ip) ?? []).filter((t) => now - t < 60_000)
-  if (list.length >= 10) return true
+  if (list.length >= 20) return true
   list.push(now)
   hits.set(ip, list)
   return false
@@ -56,8 +56,7 @@ async function handleDailyReading(request, env) {
     /* empty body is fine — a question is optional */
   }
 
-  const origin = new URL(request.url).origin
-  const cardsRes = await fetch(`${origin}/api/card-data.json`)
+  const cardsRes = await env.ASSETS.fetch(new URL('/api/card-data.json', request.url).toString())
   if (!cardsRes.ok) return json({ error: 'Card deck not found.' }, 502)
   const CARDS = await cardsRes.json()
   const card = drawCardOfTheDay(CARDS)
@@ -79,18 +78,20 @@ ${question ? `The reader's question: "${question}"` : 'The reader asked no quest
         body: JSON.stringify({
           systemInstruction: { parts: [{ text: SYSTEM_PROMPT }] },
           contents: [{ parts: [{ text: prompt }] }],
-          generationConfig: { temperature: 0.85, maxOutputTokens: 700 },
+          generationConfig: { temperature: 0.85, maxOutputTokens: 1024 },
         }),
       },
     )
-    if (res.status === 404 || res.status === 403) continue
+    if (res.status === 404 || res.status === 403 || res.status === 429 || res.status >= 500) continue
     if (!res.ok) return json({ error: 'The oracle stumbled — try again in a moment.' }, 502)
     const data = await res.json()
-    const reading = data?.candidates?.[0]?.content?.parts?.map((p) => p.text).join('').trim()
-    if (!reading) return json({ error: 'The cards came back blank — try again.' }, 502)
+    const cand = data?.candidates?.[0]
+    const reading = cand?.content?.parts?.map((p) => p.text).join('').trim()
+    if (cand?.finishReason && cand.finishReason !== 'STOP') continue
+    if (!reading) continue
     return json({ configured: true, num: card.num, name: card.name, keywords: card.keywords, reading })
   }
-  return json({ error: 'No Gemini model available — check GEMINI_API_KEY.' }, 502)
+  return json({ error: 'The cards are catching their breath — try again in a moment.' }, 502)
 }
 
 export default {
@@ -105,8 +106,7 @@ export default {
     const assetRes = await env.ASSETS.fetch(request)
     if (assetRes.status === 404 && request.method === 'GET' && !url.pathname.includes('.')) {
       // SPA fallback: client-side routes like /library, /pairs, /astrology
-      // (Pages serves the root index.html asset at "/", not at "/index.html")
-      return env.ASSETS.fetch(new URL('/', request.url))
+      return env.ASSETS.fetch(new URL('/index.html', request.url).toString())
     }
     return assetRes
   },
