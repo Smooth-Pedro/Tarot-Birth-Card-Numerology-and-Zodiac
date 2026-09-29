@@ -116,6 +116,22 @@ async function handleRequest(request) {
     }
   }
 
+  if (url.pathname === '/api/ping-google') {
+    const apiKey = typeof GEMINI_API_KEY !== 'undefined' ? GEMINI_API_KEY : ''
+    const t0 = Date.now()
+    try {
+      const res = await fetch('https://generativelanguage.googleapis.com/v1beta/models/gemini-3.6-flash:generateContent?key=' + apiKey, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ contents: [{ parts: [{ text: 'Say OK' }] }] }),
+      })
+      const bodyText = await res.text()
+      return json({ keyLen: apiKey.length, status: res.status, ms: Date.now() - t0, body: bodyText.slice(0, 120) })
+    } catch (e) {
+      return json({ keyLen: apiKey.length, threw: String(e).slice(0, 200), ms: Date.now() - t0 })
+    }
+  }
+
   const assetRes = await ASSETS.fetch(request)
   if (assetRes.status === 404 && request.method === 'GET' && !url.pathname.includes('.')) {
     // SPA fallback: client-side routes like /library, /pairs, /astrology
