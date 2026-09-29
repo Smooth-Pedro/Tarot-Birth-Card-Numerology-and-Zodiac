@@ -1,12 +1,9 @@
 // ─── Pages _worker.js — AI reading API + static site + SPA fallback ───
-// Advanced-mode Worker for the Pages deployment.
+// Classic (service-worker) format for the Pages/Workers deployment.
+// Bindings arrive as globals: ASSETS, GEMINI_API_KEY.
 // - POST /api/daily-reading → Gemini-powered tarot reading (key stays server-side)
-// - everything else → static assets (env.ASSETS)
+// - everything else → static assets (ASSETS)
 // - unknown GET paths without a file extension → index.html (client-side routing)
-//
-// Required env var: GEMINI_API_KEY — set via:
-//   Dashboard → Workers & Pages → tarot-birth-cards-numerology →
-//   Settings → Variables and secrets → Add (type: Secret)
 
 const MODELS = ['gemini-3.6-flash', 'gemini-3-flash-preview', 'gemini-3.8-flash', 'gemini-3.7-flash', 'gemini-flash-latest']
 
@@ -41,8 +38,8 @@ function json(body, status = 200) {
   return Response.json(body, { status })
 }
 
-async function handleDailyReading(request, env) {
-  const apiKey = env.GEMINI_API_KEY
+async function handleDailyReading(request) {
+  const apiKey = typeof GEMINI_API_KEY !== 'undefined' ? GEMINI_API_KEY : ''
   if (!apiKey) return json({ configured: false })
 
   const ip = request.headers.get('cf-connecting-ip') ?? 'unknown'
@@ -56,7 +53,7 @@ async function handleDailyReading(request, env) {
     /* empty body is fine — a question is optional */
   }
 
-  const cardsRes = await env.ASSETS.fetch(new URL('/api/card-data.json', request.url).toString())
+  const cardsRes = await ASSETS.fetch(new URL('/api/card-data.json', request.url).toString())
   if (!cardsRes.ok) return json({ error: 'Card deck not found.' }, 502)
   const CARDS = await cardsRes.json()
   const card = drawCardOfTheDay(CARDS)
@@ -106,25 +103,27 @@ ${question ? `The reader's question: "${question}"` : 'The reader asked no quest
   return json({ error: 'The cards are catching their breath — try again in a moment.' }, 502)
 }
 
-export default {
-  async fetch(request, env) {
-    const url = new URL(request.url)
+async function handleRequest(request) {
+  const url = new URL(request.url)
 
-    if (url.pathname === '/api/daily-reading') {
-      if (request.method !== 'POST') return json({ error: 'POST only' }, 405)
-      try {
-        return await handleDailyReading(request, env)
-      } catch {
-        // never surface a raw worker exception — always answer in-voice
-        return json({ error: 'The cards are catching their breath — try again in a moment.' }, 502)
-      }
+  if (url.pathname === '/api/daily-reading') {
+    if (request.method !== 'POST') return json({ error: 'POST only' }, 405)
+    try {
+      return await handleDailyReading(request)
+    } catch {
+      // never surface a raw worker exception — always answer in-voice
+      return json({ error: 'The cards are catching their breath — try again in a moment.' }, 502)
     }
+  }
 
-    const assetRes = await env.ASSETS.fetch(request)
-    if (assetRes.status === 404 && request.method === 'GET' && !url.pathname.includes('.')) {
-      // SPA fallback: client-side routes like /library, /pairs, /astrology
-      return env.ASSETS.fetch(new URL('/index.html', request.url).toString())
-    }
-    return assetRes
-  },
+  const assetRes = await ASSETS.fetch(request)
+  if (assetRes.status === 404 && request.method === 'GET' && !url.pathname.includes('.')) {
+    // SPA fallback: client-side routes like /library, /pairs, /astrology
+    return ASSETS.fetch(new URL('/index.html', request.url).toString())
+  }
+  return assetRes
 }
+
+addEventListener('fetch', (event) => {
+  event.respondWith(handleRequest(event.request))
+})
