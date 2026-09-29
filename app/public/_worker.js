@@ -58,9 +58,14 @@ async function handleDailyReading(request, env) {
     /* empty body is fine — a question is optional */
   }
 
-  const cardsRes = await env.ASSETS.fetch(new URL('/api/card-data.json', request.url).toString())
-  if (!cardsRes.ok) return json({ error: 'Card deck not found.' }, 502)
-  const CARDS = await cardsRes.json()
+  let CARDS
+  try {
+    const cardsRes = await env.ASSETS.fetch(new URL('/api/card-data.json', request.url).toString())
+    if (!cardsRes.ok) return json(debug ? { ...diag, deckStatus: cardsRes.status } : { error: 'Card deck not found.' }, 502)
+    CARDS = await cardsRes.json()
+  } catch (e) {
+    return json(debug ? { ...diag, deckThrew: String(e).slice(0, 300) } : { error: 'Card deck not found.' }, 502)
+  }
   const card = drawCardOfTheDay(CARDS)
 
   const prompt = `Card of the day: ${card.name} (${card.num}).
@@ -129,8 +134,9 @@ export default {
       if (request.method !== 'POST') return json({ error: 'POST only' }, 405)
       try {
         return await handleDailyReading(request, env)
-      } catch {
+      } catch (e) {
         // never surface a raw worker exception — always answer in-voice
+        if (request.headers.get('x-debug') === '1') return json({ fatal: String((e && e.stack) || e).slice(0, 400) }, 502)
         return json({ error: 'The cards are catching their breath — try again in a moment.' }, 502)
       }
     }
