@@ -1,9 +1,8 @@
 // ─── Pages _worker.js — AI reading API + static site + SPA fallback ───
-// Classic (service-worker) format for the Pages/Workers deployment.
-// Bindings arrive as globals: ASSETS, OPENROUTER_API_KEY, GEMINI_API_KEY.
+// Module-format Worker (env.ASSETS binding is injected by wrangler for module workers).
 // - POST /api/daily-reading → AI tarot reading via OpenRouter (key stays server-side),
 //   falling back to direct Gemini if OpenRouter is unreachable
-// - everything else → static assets (ASSETS)
+// - everything else → static assets (env.ASSETS)
 // - unknown GET paths without a file extension → index.html (client-side routing)
 
 const OPENROUTER_MODELS = ['google/gemini-3.6-flash', 'google/gemini-3.1-flash-lite', 'google/gemma-4-31b-it:free']
@@ -72,9 +71,9 @@ async function tryOpenRouter(apiKey, prompt) {
   return null
 }
 
-async function handleDailyReading(request) {
-  const apiKey = typeof GEMINI_API_KEY !== 'undefined' ? GEMINI_API_KEY : ''
-  const orKey = typeof OPENROUTER_API_KEY !== 'undefined' ? OPENROUTER_API_KEY : ''
+async function handleDailyReading(request, env) {
+  const apiKey = env.GEMINI_API_KEY ?? ''
+  const orKey = env.OPENROUTER_API_KEY ?? ''
   if (!apiKey && !orKey) return json({ configured: false })
 
   const ip = request.headers.get('cf-connecting-ip') ?? 'unknown'
@@ -88,7 +87,7 @@ async function handleDailyReading(request) {
     /* empty body is fine — a question is optional */
   }
 
-  const cardsRes = await ASSETS.fetch(new URL('/api/card-data.json', request.url).toString())
+  const cardsRes = await env.ASSETS.fetch(new URL('/api/card-data.json', request.url).toString())
   if (!cardsRes.ok) return json({ error: 'Card deck not found.' }, 502)
   const CARDS = await cardsRes.json()
   const card = drawCardOfTheDay(CARDS)
@@ -145,68 +144,44 @@ ${question ? `The reader's question: "${question}"` : 'The reader asked no quest
   return json({ error: 'The cards are catching their breath — try again in a moment.' }, 502)
 }
 
-async function handleRequest(request) {
-  const url = new URL(request.url)
+export default {
+  async fetch(request, env) {
+    const url = new URL(request.url)
 
-  if (url.pathname === '/api/health') {
-    const orKey = typeof OPENROUTER_API_KEY !== 'undefined' ? OPENROUTER_API_KEY : ''
-    const gKey = typeof GEMINI_API_KEY !== 'undefined' ? GEMINI_API_KEY : ''
-    const t0 = Date.now()
-    let orStatus = null
-    let orErr = null
-    try {
-      const res = await fetch('https://openrouter.ai/api/v1/chat/completions', {
-        method: 'POST',
-        headers: { Authorization: `Bearer ${orKey}`, 'Content-Type': 'application/json' },
-        body: JSON.stringify({ model: 'google/gemini-3.6-flash', messages: [{ role: 'user', content: 'Say OK' }], max_tokens: 5 }),
+    if (url.pathname === '/api/health') {
+      let assetsBound = false
+      let deckStatus = null
+      try {
+        const probe = await env.ASSETS.fetch(new URL('/api/card-data.json', request.url).toString())
+        deckStatus = probe.status
+        assetsBound = true
+      } catch {
+        assetsBound = false
+      }
+      return json({
+        marker: 'or-module-v1',
+        assetsBound,
+        deckStatus,
+        orKeyLen: env.OPENROUTER_API_KEY ? env.OPENROUTER_API_KEY.length : 0,
+        gKeyLen: env.GEMINI_API_KEY ? env.GEMINI_API_KEY.length : 0,
       })
-      orStatus = res.status
-    } catch (e) {
-      orErr = String(e).slice(0, 120)
     }
-    // replicate the daily-reading flow: deck fetch + tryOpenRouter
-    let deck = null
-    try {
-      const cardsRes = await ASSETS.fetch(new URL('/api/card-data.json', request.url).toString())
-      const text = await cardsRes.text()
-      deck = { status: cardsRes.status, len: text.length }
-    } catch (e) {
-      deck = { threw: String(e).slice(0, 120) }
-    }
-    const probePrompt = 'Card of the day: The Chariot (7).\nKeywords: Determination, Willpower, Triumph, Direction\nMeaning: victory through focused will.\nShadow: aggression.\nGuidance: choose fewer battles.\n\nThe reader\'s question: "o que o dia reserva?"'
-    const t1 = Date.now()
-    const orReading = await tryOpenRouter(orKey, probePrompt)
-    return json({
-      marker: 'or-health-v2',
-      orKeyLen: orKey.length,
-      gKeyLen: gKey.length,
-      orStatus,
-      orErr,
-      deck,
-      orReadingLen: orReading ? orReading.length : null,
-      orMs: Date.now() - t1,
-      totalMs: Date.now() - t0,
-    })
-  }
 
-  if (url.pathname === '/api/daily-reading') {
-    if (request.method !== 'POST') return json({ error: 'POST only' }, 405)
-    try {
-      return await handleDailyReading(request)
-    } catch {
-      // never surface a raw worker exception — always answer in-voice
-      return json({ error: 'The cards are catching their breath — try again in a moment.' }, 502)
+    if (url.pathname === '/api/daily-reading') {
+      if (request.method !== 'POST') return json({ error: 'POST only' }, 405)
+      try {
+        return await handleDailyReading(request, env)
+      } catch {
+        // never surface a raw worker exception — always answer in-voice
+        return json({ error: 'The cards are catching their breath — try again in a moment.' }, 502)
+      }
     }
-  }
 
-  const assetRes = await ASSETS.fetch(request)
-  if (assetRes.status === 404 && request.method === 'GET' && !url.pathname.includes('.')) {
-    // SPA fallback: client-side routes like /library, /pairs, /astrology
-    return ASSETS.fetch(new URL('/index.html', request.url).toString())
-  }
-  return assetRes
+    const assetRes = await env.ASSETS.fetch(request)
+    if (assetRes.status === 404 && request.method === 'GET' && !url.pathname.includes('.')) {
+      // SPA fallback: client-side routes like /library, /pairs, /astrology
+      return env.ASSETS.fetch(new URL('/index.html', request.url).toString())
+    }
+    return assetRes
+  },
 }
-
-addEventListener('fetch', (event) => {
-  event.respondWith(handleRequest(event.request))
-})
