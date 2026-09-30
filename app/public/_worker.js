@@ -22,8 +22,8 @@ Voice rules:
 - 3 short paragraphs, plain text, no headings, no bullet points, no disclaimers.`
 
 function drawCardOfTheDay(cards) {
-  const seed = Number(new Date().toISOString().slice(0, 10).replace(/-/g, ''))
-  return cards[seed % cards.length]
+  // random card per draw — same card all day felt stale; the arcana answers each question anew
+  return cards[Math.floor(Math.random() * cards.length)]
 }
 
 const hits = new Map()
