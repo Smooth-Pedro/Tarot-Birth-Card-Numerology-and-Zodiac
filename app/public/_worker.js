@@ -148,25 +148,6 @@ export default {
   async fetch(request, env) {
     const url = new URL(request.url)
 
-    if (url.pathname === '/api/health') {
-      let assetsBound = false
-      let deckStatus = null
-      try {
-        const probe = await env.ASSETS.fetch(new URL('/api/card-data.json', request.url).toString())
-        deckStatus = probe.status
-        assetsBound = true
-      } catch {
-        assetsBound = false
-      }
-      return json({
-        marker: 'or-module-v1',
-        assetsBound,
-        deckStatus,
-        orKeyLen: env.OPENROUTER_API_KEY ? env.OPENROUTER_API_KEY.length : 0,
-        gKeyLen: env.GEMINI_API_KEY ? env.GEMINI_API_KEY.length : 0,
-      })
-    }
-
     if (url.pathname === '/api/daily-reading') {
       if (request.method !== 'POST') return json({ error: 'POST only' }, 405)
       try {
