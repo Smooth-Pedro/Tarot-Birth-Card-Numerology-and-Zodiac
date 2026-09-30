@@ -148,6 +148,25 @@ ${question ? `The reader's question: "${question}"` : 'The reader asked no quest
 async function handleRequest(request) {
   const url = new URL(request.url)
 
+  if (url.pathname === '/api/health') {
+    const orKey = typeof OPENROUTER_API_KEY !== 'undefined' ? OPENROUTER_API_KEY : ''
+    const gKey = typeof GEMINI_API_KEY !== 'undefined' ? GEMINI_API_KEY : ''
+    const t0 = Date.now()
+    let orStatus = null
+    let orErr = null
+    try {
+      const res = await fetch('https://openrouter.ai/api/v1/chat/completions', {
+        method: 'POST',
+        headers: { Authorization: `Bearer ${orKey}`, 'Content-Type': 'application/json' },
+        body: JSON.stringify({ model: 'google/gemini-3.6-flash', messages: [{ role: 'user', content: 'Say OK' }], max_tokens: 5 }),
+      })
+      orStatus = res.status
+    } catch (e) {
+      orErr = String(e).slice(0, 120)
+    }
+    return json({ marker: 'or-health-v1', orKeyLen: orKey.length, gKeyLen: gKey.length, orStatus, orErr, ms: Date.now() - t0 })
+  }
+
   if (url.pathname === '/api/daily-reading') {
     if (request.method !== 'POST') return json({ error: 'POST only' }, 405)
     try {
