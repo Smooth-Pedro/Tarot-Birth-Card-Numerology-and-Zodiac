@@ -1,9 +1,12 @@
 // ─── Pages _worker.js — AI reading API + static site + SPA fallback ───
 // Classic (service-worker) format for the Pages/Workers deployment.
-// Bindings arrive as globals: ASSETS, GEMINI_API_KEY.
-// - POST /api/daily-reading → Gemini-powered tarot reading (key stays server-side)
+// Bindings arrive as globals: ASSETS, OPENROUTER_API_KEY, GEMINI_API_KEY.
+// - POST /api/daily-reading → AI tarot reading via OpenRouter (key stays server-side),
+//   falling back to direct Gemini if OpenRouter is unreachable
 // - everything else → static assets (ASSETS)
 // - unknown GET paths without a file extension → index.html (client-side routing)
+
+const OPENROUTER_MODELS = ['google/gemini-3.6-flash', 'google/gemini-3.1-flash-lite', 'google/gemma-4-31b-it:free']
 
 const MODELS = ['gemini-3.6-flash', 'gemini-3-flash-preview', 'gemini-3.8-flash', 'gemini-3.7-flash', 'gemini-flash-latest']
 
@@ -38,9 +41,41 @@ function json(body, status = 200) {
   return Response.json(body, { status })
 }
 
+async function tryOpenRouter(apiKey, prompt) {
+  for (const model of OPENROUTER_MODELS) {
+    try {
+      const res = await fetch('https://openrouter.ai/api/v1/chat/completions', {
+        method: 'POST',
+        headers: { Authorization: `Bearer ${apiKey}`, 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          model,
+          messages: [
+            { role: 'system', content: SYSTEM_PROMPT },
+            { role: 'user', content: prompt },
+          ],
+          temperature: 0.85,
+          max_tokens: 2000,
+        }),
+      })
+      if (res.status === 404 || res.status === 401 || res.status === 403 || res.status === 429 || res.status >= 500) continue
+      if (!res.ok) continue
+      const data = await res.json()
+      const choice = data?.choices?.[0]
+      const reading = (choice?.message?.content ?? '').trim()
+      if (reading.length < 50) continue
+      return reading
+    } catch {
+      // network-level failure — try the next model
+      continue
+    }
+  }
+  return null
+}
+
 async function handleDailyReading(request) {
   const apiKey = typeof GEMINI_API_KEY !== 'undefined' ? GEMINI_API_KEY : ''
-  if (!apiKey) return json({ configured: false })
+  const orKey = typeof OPENROUTER_API_KEY !== 'undefined' ? OPENROUTER_API_KEY : ''
+  if (!apiKey && !orKey) return json({ configured: false })
 
   const ip = request.headers.get('cf-connecting-ip') ?? 'unknown'
   if (rateLimited(ip)) return json({ error: 'Slow down — the cards need a moment.' }, 429)
@@ -66,6 +101,13 @@ Guidance: ${card.guidance}
 
 ${question ? `The reader's question: "${question}"` : 'The reader asked no question — read the card as general guidance for their day.'}`
 
+  // Primary path: OpenRouter (Google treats its IPs normally — no datacenter throttling)
+  if (orKey) {
+    const reading = await tryOpenRouter(orKey, prompt)
+    if (reading) return json({ configured: true, num: card.num, name: card.name, keywords: card.keywords, reading })
+  }
+
+  // Fallback path: direct Gemini (works when the key's quota is healthy)
   for (const model of MODELS) {
     try {
       const res = await fetch(
