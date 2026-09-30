@@ -164,7 +164,29 @@ async function handleRequest(request) {
     } catch (e) {
       orErr = String(e).slice(0, 120)
     }
-    return json({ marker: 'or-health-v1', orKeyLen: orKey.length, gKeyLen: gKey.length, orStatus, orErr, ms: Date.now() - t0 })
+    // replicate the daily-reading flow: deck fetch + tryOpenRouter
+    let deck = null
+    try {
+      const cardsRes = await ASSETS.fetch(new URL('/api/card-data.json', request.url).toString())
+      const text = await cardsRes.text()
+      deck = { status: cardsRes.status, len: text.length }
+    } catch (e) {
+      deck = { threw: String(e).slice(0, 120) }
+    }
+    const probePrompt = 'Card of the day: The Chariot (7).\nKeywords: Determination, Willpower, Triumph, Direction\nMeaning: victory through focused will.\nShadow: aggression.\nGuidance: choose fewer battles.\n\nThe reader\'s question: "o que o dia reserva?"'
+    const t1 = Date.now()
+    const orReading = await tryOpenRouter(orKey, probePrompt)
+    return json({
+      marker: 'or-health-v2',
+      orKeyLen: orKey.length,
+      gKeyLen: gKey.length,
+      orStatus,
+      orErr,
+      deck,
+      orReadingLen: orReading ? orReading.length : null,
+      orMs: Date.now() - t1,
+      totalMs: Date.now() - t0,
+    })
   }
 
   if (url.pathname === '/api/daily-reading') {
