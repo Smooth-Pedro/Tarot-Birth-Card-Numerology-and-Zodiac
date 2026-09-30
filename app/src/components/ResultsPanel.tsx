@@ -13,6 +13,7 @@ import { computeNameNumbers } from '@/lib/nameNumerology'
 import { pairPath, PAIR_DETAILS } from '@/lib/extendedNumerology'
 import NameNumerologyPanel from './NameNumerologyPanel'
 import ExtendedChartPanel from './ExtendedChartPanel'
+import ConstellationPanel from './ConstellationPanel'
 import NameExtrasPanel from './NameExtrasPanel'
 
 export type ReadingScope = 'date' | 'name' | 'all'
@@ -83,8 +84,8 @@ function ChartIndex({ scope, hasName }: { scope: ReadingScope; hasName: boolean 
   const layers: { n: number; label: string; href: string }[] = []
   let n = 0
   if (dateScope) {
-    layers.push({ n: ++n, label: 'Life Path — the spine of the whole chart', href: '#layer-life-path' })
     layers.push({ n: ++n, label: 'Tarot Birth Cards — your archetype pair', href: '#layer-birth-cards' })
+    layers.push({ n: ++n, label: 'Life Path — the spine of the whole chart', href: '#layer-life-path' })
   }
   if (nameScope) {
     layers.push({ n: ++n, label: 'Destiny — what your name makes of you', href: '#layer-destiny' })
@@ -100,6 +101,7 @@ function ChartIndex({ scope, hasName }: { scope: ReadingScope; hasName: boolean 
       layers.push({ n: ++n, label: 'Balance Number — how you restore yourself', href: '#layer-balance' })
     }
     layers.push({ n: ++n, label: 'Year Cards — the theme of this year and next', href: '#layer-year-cards' })
+    layers.push({ n: ++n, label: 'Your Life Constellation — the whole sky at once', href: '#layer-constellation' })
   } else if (hasName) {
     layers.push({ n: ++n, label: 'Balance Number — how you restore yourself', href: '#layer-balance' })
     layers.push({ n: ++n, label: 'Karmic Debt — lessons carried in your name', href: '#layer-karmic' })
@@ -201,6 +203,93 @@ export default function ResultsPanel({ date, birth, lifePath, workings, name, sc
       {/* ── Chart index: layers in order of importance ────── */}
       <ChartIndex scope={scope} hasName={!!name} />
 
+      {/* ── Layer 2: Tarot Birth Cards (date scope / everything) ── */}
+      {showDate && (
+      <section id="layer-birth-cards" className="rounded-3xl border border-indigo-400/20 bg-white/[0.03] backdrop-blur-sm p-6 sm:p-10 scroll-mt-24">
+        <div className="text-center mb-8">
+          <Badge
+            variant="outline"
+            className="border-amber-200/40 text-amber-200 mb-3 tracking-[0.2em] uppercase"
+          >
+            Layer 1 · Tarot Birth Cards
+          </Badge>
+          <h3 className="font-cinzel text-2xl text-amber-100">
+            {pairCards.length === 1 ? 'Your Birth Card' : 'Your Birth Card Pair'}
+          </h3>
+          {pathName && (
+            <p className="font-cinzel text-amber-300/90 tracking-[0.2em] uppercase text-sm mt-1">
+              ✦ {pathName} ✦
+            </p>
+          )}
+          <p className="text-indigo-200/70 text-sm mt-2 max-w-2xl mx-auto">
+            The date digits reduce through the Major Arcana chain{' '}
+            <span className="text-amber-200/90 font-mono">{chainLabel}</span>. The first card is
+            your outer personality — how you meet the world. The second is your soul card, the
+            hidden lesson beneath.
+          </p>
+          {pairDetail && (
+            <p className="text-indigo-100/80 text-sm mt-3 max-w-2xl mx-auto leading-relaxed">
+              {pairDetail.together}{' '}
+              <RefLink hash={`pair-${b.primary}-${b.secondary}`} to="/pairs">Full pair entry ↓</RefLink>
+            </p>
+          )}
+        </div>
+
+        <div className="flex flex-wrap justify-center gap-8 sm:gap-12">
+          {pairCards.map((card, i) => (
+            <div key={card.num} className="flex flex-col items-center gap-4 w-full max-w-md">
+              <TarotCardFace card={card} size="lg" />
+              <Badge
+                variant="secondary"
+                className="bg-indigo-500/15 text-indigo-200 border-indigo-300/20"
+              >
+                {i === 0 ? 'Personality Card' : pairCards.length === 3 ? 'Middle Card' : 'Soul Card'}
+              </Badge>
+              <CardDeepDive card={card} />
+              <RefLink hash={`arcana-${card.num}`}>Full library entry for {card.name} ↓</RefLink>
+            </div>
+          ))}
+        </div>
+
+        {/* Hidden Justice card — now a compact note; full story lives on /pairs */}
+        {b.primary === 17 && (
+          <div className="mt-10 pt-8 border-t border-indigo-400/10">
+            <p className="text-center text-indigo-200/75 text-sm max-w-2xl mx-auto leading-relaxed">
+              A hidden third card walks behind this pair: in the oldest decks{' '}
+              <span className="text-amber-200">VIII is Justice</span> and XI is Strength — and
+              strength without justice does not exist.{' '}
+              <RefLink hash="justice-curiosity" to="/pairs">
+                Read the full story, with Justice added to this pair ↓
+              </RefLink>
+            </p>
+          </div>
+        )}
+
+        {tertiary && b.tertiary !== null && b.secondary !== b.tertiary && (
+          <div className="mt-10 pt-8 border-t border-indigo-400/10">
+            <div className="text-center mb-6">
+              <Badge
+                variant="outline"
+                className="border-amber-200/40 text-amber-200 mb-2 tracking-[0.2em] uppercase"
+              >
+                Triple Birth Cards · Rare
+              </Badge>
+              <p className="text-indigo-200/70 text-sm max-w-xl mx-auto">
+                Your chain keeps reducing to a third card — a life of layered lessons and rare
+                depth.
+              </p>
+            </div>
+            <div className="flex flex-wrap justify-center gap-8">
+              <div className="flex flex-col items-center gap-4 w-full max-w-md">
+                <TarotCardFace card={tertiary} size="md" />
+                <CardDeepDive card={tertiary} />
+              </div>
+            </div>
+          </div>
+        )}
+      </section>
+      )}
+
       {/* ── Layer 1: Life Path (date scope / everything) ───── */}
       {showDate && (
       <section id="layer-life-path" className="rounded-3xl border border-indigo-400/20 bg-white/[0.03] backdrop-blur-sm p-6 sm:p-10 scroll-mt-24">
@@ -209,7 +298,7 @@ export default function ResultsPanel({ date, birth, lifePath, workings, name, sc
             variant="outline"
             className="border-amber-200/40 text-amber-200 mb-3 tracking-[0.2em] uppercase"
           >
-            Layer 1 · The Spine of Your Chart
+            Layer 2 · The Spine of Your Chart
           </Badge>
           <h3 className="font-cinzel text-2xl text-amber-100">
             Life Path {lp.number}
@@ -334,93 +423,6 @@ export default function ResultsPanel({ date, birth, lifePath, workings, name, sc
       </section>
       )}
 
-      {/* ── Layer 2: Tarot Birth Cards (date scope / everything) ── */}
-      {showDate && (
-      <section id="layer-birth-cards" className="rounded-3xl border border-indigo-400/20 bg-white/[0.03] backdrop-blur-sm p-6 sm:p-10 scroll-mt-24">
-        <div className="text-center mb-8">
-          <Badge
-            variant="outline"
-            className="border-amber-200/40 text-amber-200 mb-3 tracking-[0.2em] uppercase"
-          >
-            Layer 2 · Tarot Birth Cards
-          </Badge>
-          <h3 className="font-cinzel text-2xl text-amber-100">
-            {pairCards.length === 1 ? 'Your Birth Card' : 'Your Birth Card Pair'}
-          </h3>
-          {pathName && (
-            <p className="font-cinzel text-amber-300/90 tracking-[0.2em] uppercase text-sm mt-1">
-              ✦ {pathName} ✦
-            </p>
-          )}
-          <p className="text-indigo-200/70 text-sm mt-2 max-w-2xl mx-auto">
-            The date digits reduce through the Major Arcana chain{' '}
-            <span className="text-amber-200/90 font-mono">{chainLabel}</span>. The first card is
-            your outer personality — how you meet the world. The second is your soul card, the
-            hidden lesson beneath.
-          </p>
-          {pairDetail && (
-            <p className="text-indigo-100/80 text-sm mt-3 max-w-2xl mx-auto leading-relaxed">
-              {pairDetail.together}{' '}
-              <RefLink hash={`pair-${b.primary}-${b.secondary}`} to="/pairs">Full pair entry ↓</RefLink>
-            </p>
-          )}
-        </div>
-
-        <div className="flex flex-wrap justify-center gap-8 sm:gap-12">
-          {pairCards.map((card, i) => (
-            <div key={card.num} className="flex flex-col items-center gap-4 w-full max-w-md">
-              <TarotCardFace card={card} size="lg" />
-              <Badge
-                variant="secondary"
-                className="bg-indigo-500/15 text-indigo-200 border-indigo-300/20"
-              >
-                {i === 0 ? 'Personality Card' : pairCards.length === 3 ? 'Middle Card' : 'Soul Card'}
-              </Badge>
-              <CardDeepDive card={card} />
-              <RefLink hash={`arcana-${card.num}`}>Full library entry for {card.name} ↓</RefLink>
-            </div>
-          ))}
-        </div>
-
-        {/* Hidden Justice card — now a compact note; full story lives on /pairs */}
-        {b.primary === 17 && (
-          <div className="mt-10 pt-8 border-t border-indigo-400/10">
-            <p className="text-center text-indigo-200/75 text-sm max-w-2xl mx-auto leading-relaxed">
-              A hidden third card walks behind this pair: in the oldest decks{' '}
-              <span className="text-amber-200">VIII is Justice</span> and XI is Strength — and
-              strength without justice does not exist.{' '}
-              <RefLink hash="justice-curiosity" to="/pairs">
-                Read the full story, with Justice added to this pair ↓
-              </RefLink>
-            </p>
-          </div>
-        )}
-
-        {tertiary && b.tertiary !== null && b.secondary !== b.tertiary && (
-          <div className="mt-10 pt-8 border-t border-indigo-400/10">
-            <div className="text-center mb-6">
-              <Badge
-                variant="outline"
-                className="border-amber-200/40 text-amber-200 mb-2 tracking-[0.2em] uppercase"
-              >
-                Triple Birth Cards · Rare
-              </Badge>
-              <p className="text-indigo-200/70 text-sm max-w-xl mx-auto">
-                Your chain keeps reducing to a third card — a life of layered lessons and rare
-                depth.
-              </p>
-            </div>
-            <div className="flex flex-wrap justify-center gap-8">
-              <div className="flex flex-col items-center gap-4 w-full max-w-md">
-                <TarotCardFace card={tertiary} size="md" />
-                <CardDeepDive card={tertiary} />
-              </div>
-            </div>
-          </div>
-        )}
-      </section>
-      )}
-
       {/* ── Layers 3–5: Name numerology (name scope / everything) ── */}
       {showName && name && <NameNumerologyPanel name={name} />}
       {scope === 'name' && name && <NameExtrasPanel name={name} />}
@@ -433,6 +435,11 @@ export default function ResultsPanel({ date, birth, lifePath, workings, name, sc
           lifePathNumber={lp.number}
           expressionNumber={nameNumbers?.expression}
         />
+      )}
+
+      {/* ── Life Constellation (date scope) ───────────────── */}
+      {showDate && (
+        <ConstellationPanel date={date!} birth={b} lifePath={lp} />
       )}
 
       {/* ── Combined Reading ──────────────────────────────── */}

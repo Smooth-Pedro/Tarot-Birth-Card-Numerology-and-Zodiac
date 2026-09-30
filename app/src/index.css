@@ -4,63 +4,63 @@
 
 @layer base {
   :root {
-    --background: 258 45% 6%;
+    --background: 258 50% 11%;
     --foreground: 240 20% 95%;
-    --card: 258 40% 9%;
+    --card: 258 45% 14%;
     --card-foreground: 240 20% 95%;
-    --popover: 258 40% 9%;
+    --popover: 258 45% 14%;
     --popover-foreground: 240 20% 95%;
     --primary: 43 85% 62%;
     --primary-foreground: 258 45% 8%;
-    --secondary: 255 30% 16%;
+    --secondary: 256 38% 20%;
     --secondary-foreground: 240 20% 95%;
-    --muted: 255 25% 14%;
+    --muted: 256 33% 17%;
     --muted-foreground: 245 15% 68%;
-    --accent: 255 30% 16%;
+    --accent: 256 38% 20%;
     --accent-foreground: 240 20% 95%;
     --destructive: 0 70% 55%;
     --destructive-foreground: 0 0% 98%;
-    --border: 255 25% 20%;
-    --input: 255 25% 22%;
+    --border: 255 30% 27%;
+    --input: 255 30% 29%;
     --ring: 43 85% 62%;
     --radius: 0.625rem;
-    --sidebar-background: 258 40% 9%;
+    --sidebar-background: 258 45% 14%;
     --sidebar-foreground: 240 20% 95%;
     --sidebar-primary: 43 85% 62%;
     --sidebar-primary-foreground: 258 45% 8%;
-    --sidebar-accent: 255 30% 16%;
+    --sidebar-accent: 256 38% 20%;
     --sidebar-accent-foreground: 240 20% 95%;
-    --sidebar-border: 255 25% 20%;
+    --sidebar-border: 255 30% 27%;
     --sidebar-ring: 43 85% 62%;
   }
 
   .dark {
-    --background: 258 45% 6%;
+    --background: 258 50% 11%;
     --foreground: 240 20% 95%;
-    --card: 258 40% 9%;
+    --card: 258 45% 14%;
     --card-foreground: 240 20% 95%;
-    --popover: 258 40% 9%;
+    --popover: 258 45% 14%;
     --popover-foreground: 240 20% 95%;
     --primary: 43 85% 62%;
     --primary-foreground: 258 45% 8%;
-    --secondary: 255 30% 16%;
+    --secondary: 256 38% 20%;
     --secondary-foreground: 240 20% 95%;
-    --muted: 255 25% 14%;
+    --muted: 256 33% 17%;
     --muted-foreground: 245 15% 68%;
-    --accent: 255 30% 16%;
+    --accent: 256 38% 20%;
     --accent-foreground: 240 20% 95%;
     --destructive: 0 70% 55%;
     --destructive-foreground: 0 0% 98%;
-    --border: 255 25% 20%;
-    --input: 255 25% 22%;
+    --border: 255 30% 27%;
+    --input: 255 30% 29%;
     --ring: 43 85% 62%;
-    --sidebar-background: 258 40% 9%;
+    --sidebar-background: 258 45% 14%;
     --sidebar-foreground: 240 20% 95%;
     --sidebar-primary: 43 85% 62%;
     --sidebar-primary-foreground: 258 45% 8%;
-    --sidebar-accent: 255 30% 16%;
+    --sidebar-accent: 256 38% 20%;
     --sidebar-accent-foreground: 240 20% 95%;
-    --sidebar-border: 255 25% 20%;
+    --sidebar-border: 255 30% 27%;
     --sidebar-ring: 43 85% 62%;
   }
 }
@@ -80,24 +80,14 @@
   font-family: 'Cinzel', 'Times New Roman', serif;
 }
 
-/* Starry night backdrop: celestial artwork under a deep-indigo veil */
+/* Starry night backdrop: royal-purple veil only (the celestial artwork with
+   the moon & sun faces was removed at the owner's request) */
 .starfield {
   isolation: isolate;
   background:
-    radial-gradient(ellipse at 50% -10%, rgba(99, 80, 220, 0.18), transparent 60%),
-    radial-gradient(ellipse at 50% 110%, rgba(120, 60, 180, 0.15), transparent 60%),
-    linear-gradient(rgba(16, 10, 34, 0.88), rgba(13, 8, 28, 0.9)),
-    url('./assets/celestial-bg.jpg');
-  background-size:
-    auto,
-    auto,
-    auto,
-    cover;
-  background-position:
-    center,
-    center,
-    center,
-    center;
+    radial-gradient(ellipse at 50% -10%, rgba(124, 92, 255, 0.22), transparent 60%),
+    radial-gradient(ellipse at 50% 110%, rgba(160, 90, 230, 0.18), transparent 60%),
+    linear-gradient(rgba(38, 22, 82, 0.85), rgba(25, 14, 58, 0.9));
   background-attachment: fixed;
 }
 
@@ -145,7 +135,7 @@ html {
   z-index: -1;
   pointer-events: none;
   overflow: hidden;
-  background: #0d081c;
+  background: #1a1038;
 }
 .journey-bg-art {
   position: absolute;
@@ -161,23 +151,23 @@ html {
 .journey-bg-openroad {
   position: absolute;
   inset: 0;
+  /* plain purple night sky — the celestial moon & sun artwork was removed
+     at the owner's request and must never appear again */
   background:
-    radial-gradient(ellipse at 50% -10%, rgba(99, 80, 220, 0.18), transparent 60%),
-    radial-gradient(ellipse at 50% 110%, rgba(120, 60, 180, 0.15), transparent 60%),
-    linear-gradient(rgba(16, 10, 34, 0.88), rgba(13, 8, 28, 0.9)),
-    url('./assets/celestial-bg.jpg');
-  background-size: auto, auto, auto, cover;
+    radial-gradient(ellipse at 50% -10%, rgba(124, 92, 255, 0.22), transparent 60%),
+    radial-gradient(ellipse at 50% 110%, rgba(160, 90, 230, 0.18), transparent 60%),
+    linear-gradient(rgba(38, 22, 82, 0.85), rgba(25, 14, 58, 0.9));
   background-position: center;
   opacity: 0.5;
 }
-/* indigo veil so the content above stays readable */
+/* purple veil so the content above stays readable */
 .journey-bg::after {
   content: '';
   position: absolute;
   inset: 0;
   background:
-    linear-gradient(rgba(13, 8, 28, 0.55), rgba(13, 8, 28, 0.4) 40%, rgba(13, 8, 28, 0.78)),
-    radial-gradient(ellipse at 50% 40%, transparent 30%, rgba(13, 8, 28, 0.5) 100%);
+    linear-gradient(rgba(24, 14, 52, 0.55), rgba(24, 14, 52, 0.4) 40%, rgba(18, 10, 42, 0.78)),
+    radial-gradient(ellipse at 50% 40%, transparent 30%, rgba(18, 10, 42, 0.5) 100%);
 }
 @keyframes journey-dissolve {
   from {
@@ -202,8 +192,8 @@ html {
   font-size: 11px;
   letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: rgba(255, 238, 199, 0.88);
-  background: rgba(13, 8, 28, 0.6);
+  color: rgba(255, 216, 120, 0.95);
+  background: rgba(26, 16, 56, 0.6);
   backdrop-filter: blur(6px);
   -webkit-backdrop-filter: blur(6px);
   border: 1px solid rgba(129, 140, 248, 0.22);
@@ -225,15 +215,15 @@ html {
   }
 }
 
-/* ── Readability pass: descriptions in warm amber, larger letters ──
+/* ── Readability pass: descriptions in vibrant golden yellow, larger letters ──
    Every description-toned text (indigo body copy, rose shadow side,
-   emerald guidance) becomes a warm yellow; body sizes go up. */
+   emerald guidance) becomes a warm, saturated gold; body sizes go up. */
 [class*='text-indigo-']:not(.text-indigo-950):not([class*='placeholder:']),
 [class*='text-rose-100'],
 [class*='text-rose-200'],
 [class*='text-emerald-50'],
 [class*='text-emerald-200'] {
-  color: rgba(253, 230, 138, 0.95) !important;
+  color: rgba(255, 210, 63, 0.97) !important;
 }
 .text-xs {
   font-size: 0.82rem !important;

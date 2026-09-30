@@ -1,0 +1,6 @@
+1 - Add a better integrated and better explained results for the tarot + numerology results, as it is now it makes it seem numerology is the main point and the explanation for the cards after the result is minimal. make it so there is a decent explanation for both and that there would still be a reason to explore the library
+
+2 - my biggest vision is actually to make a tarot + numerology constellation reading - search on the internet and you'll get what i mean, it's basically to go beyond the usual "two cards". i think it would be much more interesting this way (how it affects your life in general, like which cards are good for marriage, which cards would be trouble, same with the numbers. this is just an example search for what more can be done on that)
+
+3 - make the yellow letters more vibrant and make the purple background an actual nice shade of purple
+

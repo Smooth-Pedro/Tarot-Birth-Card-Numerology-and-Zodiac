@@ -4,11 +4,14 @@ import { getJourneyMeeting, journeyCardAt } from '@/lib/journeyMeeting'
 /**
  * The Fool's Journey as the site's living background.
  *
- * The old walking-sprite scene is gone: the background is now simply the
- * Fool meeting each of the Major Arcana, one meeting per hour of the day
- * (the Magician at 1am … Judgement at 8pm; late evening returns to the
- * open road). The current meeting's wide artwork fills the screen beneath
- * the content, veiled so the text stays readable.
+ * The background is simply the Fool meeting each of the Major Arcana, one
+ * meeting per hour of the day (the Magician at 1am … Judgement at 8pm; late
+ * evening returns to the open road). The current meeting's wide artwork fills
+ * the screen beneath the content, veiled so the text stays readable.
+ *
+ * The old "open road" fallback used to show a celestial artwork (moon & sun
+ * faces); the owner asked for that image to never appear again, so the open
+ * road is now a plain purple gradient instead.
  */
 export default function FoolsJourney() {
   const [now, setNow] = useState(() => new Date())

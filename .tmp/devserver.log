@@ -1,0 +1,13 @@
+
+> tarot-birth-cards-numerology@1.0.0 dev
+> npm --prefix app run dev -- --port 7100 --host 127.0.0.1
+
+
+> my-app@0.0.0 dev
+> vite --port 7100 --host 127.0.0.1
+
+
+  VITE v7.3.0  ready in 817 ms
+
+  ➜  Local:   http://127.0.0.1:7100/
+4:54:02 AM [vite] (client) hmr update /src/index.css, /src/components/ConstellationPanel.tsx
