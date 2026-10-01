@@ -11,6 +11,17 @@ const MODELS = ['gemini-3.6-flash', 'gemini-3-flash-preview', 'gemini-3.8-flash'
 
 const MAX_QUESTION = 300
 
+// upstream AI calls must not hang the reader — free-tier models can stall for ages
+const UPSTREAM_TIMEOUT_MS = 15_000
+
+// Last line of defense: if every AI upstream fails, the reader still gets a full
+// reading composed from the card's own material — never a blank, never "nothing".
+function fallbackReading(card) {
+  const shadow = card.shadow ? card.shadow.trim() : 'its unspoken shadow'
+  const guidance = card.guidance ? card.guidance.trim() : 'Sit with the card today and let it speak.'
+  return `${card.meaning.trim()}\n\nYet every card casts a shadow: ${shadow.charAt(0).toLowerCase() + shadow.slice(1)}. Where you meet this today, face it with awareness rather than fear — the chain is only as heavy as you agree to carry it.\n\n${guidance}`
+}
+
 const SYSTEM_PROMPT = `You are the voice of a tarot and numerology site called "Tarot Birth Cards & Numerology". You speak for the Major Arcana card drawn for the day.
 
 Voice rules:
@@ -55,6 +66,7 @@ async function tryOpenRouter(apiKey, prompt) {
           temperature: 0.85,
           max_tokens: 2000,
         }),
+        signal: AbortSignal.timeout(UPSTREAM_TIMEOUT_MS),
       })
       if (res.status === 404 || res.status === 401 || res.status === 403 || res.status === 429 || res.status >= 500) continue
       if (!res.ok) continue
@@ -119,6 +131,7 @@ ${question ? `The reader's question: "${question}"` : 'The reader asked no quest
             contents: [{ parts: [{ text: prompt }] }],
             generationConfig: { temperature: 0.85, maxOutputTokens: 8192 },
           }),
+          signal: AbortSignal.timeout(UPSTREAM_TIMEOUT_MS),
         },
       )
       if (res.status === 404 || res.status === 403 || res.status === 429 || res.status >= 500) continue
@@ -141,7 +154,17 @@ ${question ? `The reader's question: "${question}"` : 'The reader asked no quest
       continue
     }
   }
-  return json({ error: 'The cards are catching their breath — try again in a moment.' }, 502)
+
+  // Every AI upstream failed — answer from the card's own texts so the reader
+  // always receives a complete reading (UI flags it as the classic text).
+  return json({
+    configured: true,
+    num: card.num,
+    name: card.name,
+    keywords: card.keywords,
+    reading: fallbackReading(card),
+    fallback: true,
+  })
 }
 
 export default {

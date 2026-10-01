@@ -11,6 +11,7 @@ type DailyResult = {
   name: string
   keywords: string[]
   reading: string
+  fallback?: boolean
 }
 
 type DrawState =
@@ -40,11 +41,15 @@ export default function DailyReading() {
 
   const draw = async () => {
     setState({ kind: 'loading' })
+    // never leave the reader on "turning…" forever — give up after 35s
+    const controller = new AbortController()
+    const timeout = setTimeout(() => controller.abort(), 35_000)
     try {
       const res = await fetch('/api/daily-reading', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ question: question.trim() }),
+        signal: controller.signal,
       })
       const data = await res.json()
       if (data.configured === false) {
@@ -54,12 +59,13 @@ export default function DailyReading() {
       } else {
         const result: DailyResult = {
           num: data.num,
-          name: data.name,
+          name: data.name ?? 'The Arcana',
           keywords: data.keywords ?? [],
           reading: data.reading,
+          fallback: data.fallback === true,
         }
         try {
-          localStorage.setItem(storageKey(question), JSON.stringify(result))
+          localStorage.setItem(storageKey(''), JSON.stringify(result))
         } catch {
           /* storage full/private mode — reading still shows */
         }
@@ -70,6 +76,8 @@ export default function DailyReading() {
         kind: 'error',
         message: 'The oracle is unreachable right now — try again in a moment.',
       })
+    } finally {
+      clearTimeout(timeout)
     }
   }
 
@@ -133,12 +141,12 @@ export default function DailyReading() {
             </p>
           )}
 
-          {state.kind === 'ready' && card && (
+          {state.kind === 'ready' && (
             <div className="flex flex-col sm:flex-row items-center gap-6 pt-1">
-              <TarotCardFace card={card} size="md" />
+              {card && <TarotCardFace card={card} size="md" />}
               <div className="text-center sm:text-left">
                 <p className="font-cinzel text-amber-100 text-lg tracking-wide mb-1">
-                  {card.name}
+                  {state.result.name}
                 </p>
                 <p className="text-xs uppercase tracking-wider text-indigo-300/60 mb-4">
                   {state.result.keywords.join(' · ')}
@@ -146,11 +154,17 @@ export default function DailyReading() {
                 <p className="text-indigo-200/90 leading-relaxed whitespace-pre-line">
                   {state.result.reading}
                 </p>
+                {state.result.fallback && (
+                  <p className="mt-3 text-xs italic text-indigo-300/50">
+                    The AI oracle rested, so this reading speaks from the card&rsquo;s classic
+                    texts.
+                  </p>
+                )}
                 <button
                   type="button"
                   onClick={() => {
                     try {
-                      localStorage.removeItem(storageKey(question))
+                      localStorage.removeItem(storageKey(''))
                     } catch {
                       /* ignore */
                     }
