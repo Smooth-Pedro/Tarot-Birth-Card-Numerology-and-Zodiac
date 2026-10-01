@@ -5,7 +5,23 @@
 // - everything else → static assets (env.ASSETS)
 // - unknown GET paths without a file extension → index.html (client-side routing)
 
-const OPENROUTER_MODELS = ['google/gemini-3.6-flash', 'google/gemini-3.1-flash-lite', 'google/gemma-4-31b-it:free']
+// Ordered by preference — the first healthy model answers. Free models are
+// kept last (they rate-limit aggressively); IDs verified against the live
+// OpenRouter catalog.
+const OPENROUTER_MODELS = [
+  'google/gemini-3.6-flash',
+  'google/gemini-3.8-flash',
+  'google/gemini-3.5-flash',
+  'google/gemini-3.1-flash-lite',
+  'google/gemini-2.5-flash',
+  'deepseek/deepseek-v4-flash',
+  'deepseek/deepseek-v3.2',
+  'deepseek/deepseek-chat-v3-0324',
+  'meta-llama/llama-4-maverick',
+  'meta-llama/llama-4-scout',
+  'google/gemma-4-31b-it:free',
+  'google/gemma-4-26b-a4b-it:free',
+]
 
 const MODELS = ['gemini-3.6-flash', 'gemini-3-flash-preview', 'gemini-3.8-flash', 'gemini-3.7-flash', 'gemini-flash-latest']
 
